@@ -942,7 +942,10 @@ if option == '📊 Análisis temporal puntos de agua':
 
 if option == '🔎 Detección de cambios':
 	st.info('Deteccion de cambios en la Zona 1 2017 y Zona 1 2020')
-
+	
+	imagepath1 = 'Galeria concesiones/Zona1/2017.png'
+	imagepath2 = 'Galeria concesiones/Zona1/2020.png'
+	
 	image1 = imageio.imread(imagepath1) 
 	image2 = imageio.imread(imagepath2)
 
