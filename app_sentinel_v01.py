@@ -937,10 +937,6 @@ if option == '📊 Análisis temporal puntos de agua':
 if option == '🔎 Detección de cambios':
 	st.info('Deteccion de cambios en la Zona 1 2017 y Zona 1 2020')
 
-	imagepath1 = 'Galeria_concesiones/Zona1/2017.png'
-	imagepath2 = 'Galeria_concesiones/Zona1/2020.png'
-
-
 	image1 = imageio.imread(imagepath1) 
 	image2 = imageio.imread(imagepath2)
 
@@ -985,22 +981,22 @@ if option == '🔎 Detección de cambios':
 
 	def find_FVS(EVS, diff_image, mean_vec, new): # Encontrar las carracteristicas del vector
 				 
-	    i = 2
-	    feature_vector_set = []
+		i = 2
+		feature_vector_set = []
 				 
-	    while i < new[0] - 2:
-	        j = 2
-	        while j < new[1] - 2:
-	            block = diff_image[i-2:i+3, j-2:j+3]
-	            feature = block.flatten()
-	            feature_vector_set.append(feature)
-	            j = j+1
-		i = i+1
+		while i < new[0] - 2:
+			j = 2
+			while j < new[1] - 2:
+				block = diff_image[i-2:i+3, j-2:j+3]
+				feature = block.flatten()
+				feature_vector_set.append(feature)
+				j = j+1
+			i = i+1	           
 				 
-	    FVS = np.dot(feature_vector_set, EVS)
-	    FVS = FVS - mean_vec
-	    print("\nfeature vector space size", FVS.shape)
-	    return FVS
+		FVS = np.dot(feature_vector_set, EVS)
+		FVS = FVS - mean_vec
+		print("\nfeature vector space size", FVS.shape)
+		return FVS
 
 	FVS = find_FVS(EVS, diff_image, mean_vec, new_size)
 
@@ -1009,14 +1005,14 @@ if option == '🔎 Detección de cambios':
 				 
 	def clustering(FVS, components, new):
 				 
-	    kmeans = KMeans(components, verbose = 0)
-	    kmeans.fit(FVS)
-	    output = kmeans.predict(FVS)
-	    count  = Counter(output)
+		kmeans = KMeans(components, verbose = 0)
+		kmeans.fit(FVS)
+		output = kmeans.predict(FVS)
+		count  = Counter(output)
 				 
-	    least_index = min(count, key = count.get)
-	    change_map  = np.reshape(output,(new[0] - 4, new[1] - 4))
-	    return least_index, change_map
+		least_index = min(count, key = count.get)
+		change_map  = np.reshape(output,(new[0] - 4, new[1] - 4))
+		return least_index, change_map
 
 	components = 2
 	least_index, change_map = clustering(FVS, components, new_size)
