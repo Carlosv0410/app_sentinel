@@ -76,10 +76,10 @@ if option == '💧 Concesiones':
 
 if option == '🛰 Visualización satelital':
 
-	st.warning('Obtener coordenadas WGS84 para Sentinel desde el siguinete enlace: http://bboxfinder.com/#0.000000,0.000000,0.000000,0.000000')
+	st.warning('Coordenadas WGS84 para Sentinel: http://bboxfinder.com/#0.000000,0.000000,0.000000,0.000000')
 
 
-	st.warning('Ingrese las coordenadas de análisis en WGS84 e Intervalo de tiempo')
+	st.warning('Ingrese coordenadas WGS84de para el area a monitorear')
 
 
 	col1, col2,col3 = st.columns(3)
