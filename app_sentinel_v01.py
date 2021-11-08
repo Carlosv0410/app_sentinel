@@ -539,8 +539,6 @@ if option == '⛰ Evaluación de suelo':
 		video_bytes = video_file.read()
 		st.video(video_bytes ,format="video/mp4", start_time=0)
 
-			
-			
 if option =='🧪 Evaluación de la calidad el agua':
 
 	with st.expander('Análisis anual de Índices'):
@@ -661,7 +659,7 @@ if option =='🧪 Evaluación de la calidad el agua':
 
 			arrs = []
 			for band in s2_bands2017:
-			    with rasterio.open(band) as f:
+			with rasterio.open(band) as f:
 				arrs.append(f.read(1))
 			sentinel_img = np.array(arrs, dtype=arrs[0].dtype)
 			clipped_img = sentinel_img[:, 0:1080:, 0:1080]
@@ -710,7 +708,7 @@ if option =='🧪 Evaluación de la calidad el agua':
 
 			arrs = []
 			for band in s2_bands2018:
-			    with rasterio.open(band) as f:
+				with rasterio.open(band) as f:
 				arrs.append(f.read(1))
 			sentinel_img = np.array(arrs, dtype=arrs[0].dtype)
 			clipped_img = sentinel_img[:, 0:1080:, 0:1080]
@@ -759,7 +757,7 @@ if option =='🧪 Evaluación de la calidad el agua':
 
 			arrs = []
 			for band in s2_bands2019:
-			    with rasterio.open(band) as f:
+				with rasterio.open(band) as f:
 				arrs.append(f.read(1))
 			sentinel_img = np.array(arrs, dtype=arrs[0].dtype)
 			clipped_img = sentinel_img[:, 0:1080:, 0:1080]
@@ -808,7 +806,7 @@ if option =='🧪 Evaluación de la calidad el agua':
 
 			arrs = []
 			for band in s2_bands2020:
-			    with rasterio.open(band) as f:
+				with rasterio.open(band) as f:
 				arrs.append(f.read(1))
 			sentinel_img = np.array(arrs, dtype=arrs[0].dtype)
 			clipped_img = sentinel_img[:, 0:1080:, 0:1080]
@@ -857,7 +855,7 @@ if option =='🧪 Evaluación de la calidad el agua':
 
 			arrs = []
 			for band in s2_bands2021:
-			    with rasterio.open(band) as f:
+				with rasterio.open(band) as f:
 				arrs.append(f.read(1))
 			sentinel_img = np.array(arrs, dtype=arrs[0].dtype)
 			clipped_img = sentinel_img[:, 0:1080:, 0:1080]
