@@ -1,9 +1,3 @@
-# APP SENTINEL HUB CALCULO DE INDICES
-#------------------------------------
-# Librerias
-import streamlit as st 
-import rasterio     # import the main rasterio function
-from rasterio.plot import show, show_hist # some specific rasterio functions we'll need
 import matplotlib   # matplotlib is the primary python plotting and viz library
 import matplotlib.pyplot as plt
 from PIL import Image
@@ -24,6 +18,14 @@ from sentinelhub import SHConfig
 import concesiones 
 import evaluacion_suelo
 import calidad_agua
+
+#Deteccion de cambios
+import imageio #Lectura y escritura de imagenes
+from sklearn.decomposition import PCA #Principal Component Analysis Reduccion de dimensionalidad lineal 
+import sklearn    
+from sklearn.cluster import KMeans
+from collections import Counter
+import cv2
 # Inicio de sesion SentinelHub
 
 st.set_option('deprecation.showPyplotGlobalUse', False)
@@ -935,131 +937,115 @@ if option == '📊 Análisis temporal puntos de agua':
 if option == '🔎 Detección de cambios':
 	st.info('Deteccion de cambios en la Zona 1 2017 y Zona 1 2020')
 
-	import imageio #Lectura y escritura de imagenes
-	import numpy as np # Arreglos de informacion
-
-
-
-
 	imagepath1 = 'Galeria_concesiones/Zona1/2017.png'
 	imagepath2 = 'Galeria_concesiones/Zona1/2020.png'
 
 
+	image1 = imageio.imread(imagepath1) 
+	image2 = imageio.imread(imagepath2)
 
-	if imagepath1 and imagepath2 is not None :
-
-		#imagepath1 = 'data_deteccion_de_cambios\Image20210506.png'
-		#imagepath2 = 'data_deteccion_de_cambios\Image20200106.png'
-
-		image1 = imageio.imread(imagepath1) 
-		image2 = imageio.imread(imagepath2)
-
-		new_size = np.asarray(image1.shape) / 5
-		new_size = new_size.astype(int) * 5
+	new_size = np.asarray(image1.shape) / 5
+	new_size = new_size.astype(int) * 5
 				#new_size 
 
-		new_size =(1080, 1080)
+	new_size =(1080, 1080)
 
-		image1 = image1.astype(np.int16) # int16 es una estructura que se utiliza ara representar un entero de 16 bits tanto valores positivos y negativos
-		image2 = image2.astype(np.int16)
+	image1 = image1.astype(np.int16) # int16 es una estructura que se utiliza ara representar un entero de 16 bits tanto valores positivos y negativos
+	image2 = image2.astype(np.int16)
 
-		diff_image = abs(image1 - image2)
+	diff_image = abs(image1 - image2)
 				#diff_image
-		def find_vector_set(diff_image, new_size): # funcion donde se genera un vector y el promedio de este vector
+	def find_vector_set(diff_image, new_size): # funcion donde se genera un vector y el promedio de este vector
 				 
-		    i = 0
-		    j = 0
-		    vector_set = np.zeros((int(new_size[0] * new_size[1] / 100),100))
-		    while i < vector_set.shape[0]:
-		        while j < new_size[0]:
-		            k = 0
-		            while k < new_size[1]:
-		                block   = diff_image[j:j+5, k:k+5]
-		                feature = block.ravel()
-		                vector_set[i, :] = feature
-		                k = k + 5
-		            j = j + 5
-		        i = i + 1
+	    i = 0
+	    j = 0
+	    vector_set = np.zeros((int(new_size[0] * new_size[1] / 100),100))
+	    while i < vector_set.shape[0]:
+	        while j < new_size[0]:
+	            k = 0
+	            while k < new_size[1]:
+	                block   = diff_image[j:j+5, k:k+5]
+	                feature = block.ravel()
+	                vector_set[i, :] = feature
+	                k = k + 5
+	            j = j + 5
+	        i = i + 1
 				 
-		    mean_vec   = np.mean(vector_set, axis = 0)
-		    vector_set = vector_set - mean_vec   #mean normalization
+	    mean_vec   = np.mean(vector_set, axis = 0)
+	    vector_set = vector_set - mean_vec   #mean normalization
 				 
-		    return vector_set, mean_vec
+	    return vector_set, mean_vec
 
-		vector_set, mean_vec = find_vector_set(diff_image, new_size)
-		from sklearn.decomposition import PCA #Principal Component Analysis Reduccion de dimensionalidad lineal 
-		import sklearn                        # Utilizando la descomposicion de valores singulares de los datos
-		pca = PCA()                           #para proyectarlos en un espacio dimecnional inferior. Los datos de entrada    
-		pca.fit(vector_set)                   # se centran pero no se escalan para cada caracteristica antes de aplciar el SVD  
-		EVS = pca.components_
+	vector_set, mean_vec = find_vector_set(diff_image, new_size)
+                    # Utilizando la descomposicion de valores singulares de los datos
+	pca = PCA()                           #para proyectarlos en un espacio dimecnional inferior. Los datos de entrada    
+	pca.fit(vector_set)                   # se centran pero no se escalan para cada caracteristica antes de aplciar el SVD  
+	EVS = pca.components_
 
 
-		def find_FVS(EVS, diff_image, mean_vec, new): # Encontrar las carracteristicas del vector
+	def find_FVS(EVS, diff_image, mean_vec, new): # Encontrar las carracteristicas del vector
 				 
-		    i = 2
-		    feature_vector_set = []
+	    i = 2
+	    feature_vector_set = []
 				 
-		    while i < new[0] - 2:
-		        j = 2
-		        while j < new[1] - 2:
-		            block = diff_image[i-2:i+3, j-2:j+3]
-		            feature = block.flatten()
-		            feature_vector_set.append(feature)
-		            j = j+1
+	    while i < new[0] - 2:
+	        j = 2
+	        while j < new[1] - 2:
+	            block = diff_image[i-2:i+3, j-2:j+3]
+	            feature = block.flatten()
+	            feature_vector_set.append(feature)
+	            j = j+1
 		        i = i+1
 				 
-		    FVS = np.dot(feature_vector_set, EVS)
-		    FVS = FVS - mean_vec
-		    print("\nfeature vector space size", FVS.shape)
-		    return FVS
+	    FVS = np.dot(feature_vector_set, EVS)
+	    FVS = FVS - mean_vec
+	    print("\nfeature vector space size", FVS.shape)
+	    return FVS
 
-		FVS = find_FVS(EVS, diff_image, mean_vec, new_size)
+	FVS = find_FVS(EVS, diff_image, mean_vec, new_size)
 
 
-		from sklearn.cluster import KMeans
-		from collections import Counter
+
 				 
-		def clustering(FVS, components, new):
+	def clustering(FVS, components, new):
 				 
-		    kmeans = KMeans(components, verbose = 0)
-		    kmeans.fit(FVS)
-		    output = kmeans.predict(FVS)
-		    count  = Counter(output)
+	    kmeans = KMeans(components, verbose = 0)
+	    kmeans.fit(FVS)
+	    output = kmeans.predict(FVS)
+	    count  = Counter(output)
 				 
-		    least_index = min(count, key = count.get)
-		    change_map  = np.reshape(output,(new[0] - 4, new[1] - 4))
-		    return least_index, change_map
+	    least_index = min(count, key = count.get)
+	    change_map  = np.reshape(output,(new[0] - 4, new[1] - 4))
+	    return least_index, change_map
 
-		components = 2
-		least_index, change_map = clustering(FVS, components, new_size)
-
-		import cv2
-		change_map[change_map == least_index] = 255
-		change_map[change_map != 255] = 0
+	components = 2
+	least_index, change_map = clustering(FVS, components, new_size)
 
 
-		fig_change_map2 = px.imshow(change_map, title='Detección de cambios')
-		st.write(fig_change_map2)
-
-		
+	change_map[change_map == least_index] = 255
+	change_map[change_map != 255] = 0
 
 
-		fig = plt.figure(figsize=(15, 20))
+	fig_change_map2 = px.imshow(change_map, title='Detección de cambios')
+	st.write(fig_change_map2)
 
-		ax = fig.add_subplot(2, 3, 1)
-		imgplot = plt.imshow(image1)
-		ax.set_title('Zona 1 2017')
+	
+	fig = plt.figure(figsize=(15, 20))
+
+	ax = fig.add_subplot(2, 3, 1)
+	imgplot = plt.imshow(image1)
+	ax.set_title('Zona 1 2017')
 			#plt.colorbar(ticks=[0.1, 0.3, 0.5, 0.7], orientation='horizontal')
 
-		ax = fig.add_subplot(2, 3, 2)
-		imgplot = plt.imshow(image2)
+	ax = fig.add_subplot(2, 3, 2)
+	imgplot = plt.imshow(image2)
 		#imgplot.set_clim(0.0, 0.9)
-		ax.set_title('Zona 1 2020')
+	ax.set_title('Zona 1 2020')
 		#plt.colorbar(ticks=[0.1, 0.3, 0.5, 0.7], orientation='horizontal')
 
-		ax = fig.add_subplot(2, 3, 3)
-		imgplot = plt.imshow(change_map)
-		imgplot.set_cmap('nipy_spectral')
+	ax = fig.add_subplot(2, 3, 3)
+	imgplot = plt.imshow(change_map)
+	imgplot.set_cmap('nipy_spectral')
 		#imgplot.set_clim(0.0, 0.7)
-		ax.set_title('Diferencia entre zonas')
-		st.pyplot(fig)
+	ax.set_title('Diferencia entre zonas')
+	st.pyplot(fig)
