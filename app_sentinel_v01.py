@@ -54,7 +54,7 @@ st.sidebar.video(video_bytes ,format="video/mp4", start_time=0)
 #st.sidebar.write('Sentinel')
 
 st.sidebar.title('Menu')
-option = st.sidebar.radio('Seleccione una opcion', ['💧 Concesiones', '🛰 Visualización satelital', '⛰ Evaluación de suelo', '🧪 Evaluación de la calidad el agua', '📊 Análisis temporal puntos de agua','🔎 Detección de cambios'])
+option = st.sidebar.radio('Seleccione una opcion', ['💧 Concesiones', '🛰 Visualización satelital', '⛰ Evaluación de suelo', '🧪 Evaluación de la calidad el agua', '📊 Análisis temporal puntos de agua'])
 
 if option == '💧 Concesiones':
 
@@ -531,7 +531,16 @@ if option == '⛰ Evaluación de suelo':
 		if option_index_suelo =='BSI':
 			fig_bsi = px.imshow(bsi_index,title='BSI')
 			st.write(fig_bsi)
+	with st.expander('Monitoreo con detección de cambios'):
+		st.success('El Machine Learning o aprendizaje automático posibilita la identificación de patrones en los datos basándose en algoritmos que clasifican cada factor según su grado de influencia aprendiendo y mejorando el proceso continuamente')
+		st.write('Las dos principales características que determinan la percepción de las imágenes satelitales son la resolución y la frecuencia de las imágenes utilizadas. La disponibilidad de imágenes de satélites es mayor cada día y las métricas ofertadas mejoran en consecuencia, abriendo el abanico de posibilidades para aplicaciones que aporten soluciones a actividades y empresas de todo tipo.')
+		st.info('Deteccion de cambios en la Zona 1 2017 y Zona 1 2020')
+		video_file = open('deteccion_cambios.mp4', 'rb')
+		video_bytes = video_file.read()
+		st.video(video_bytes ,format="video/mp4", start_time=0)
 
+			
+			
 if option =='🧪 Evaluación de la calidad el agua':
 
 	with st.expander('Análisis anual de Índices'):
@@ -940,9 +949,6 @@ if option == '📊 Análisis temporal puntos de agua':
 		fig_final= px.line(df_resul_index, x = 'Año', y='Valor', color='Indice')
 		st.write(fig_final)
 
-if option == '🔎 Detección de cambios':
-	st.info('Deteccion de cambios en la Zona 1 2017 y Zona 1 2020')
-	video_file = open('deteccion_cambios.mp4', 'rb')
-	video_bytes = video_file.read()
-	st.video(video_bytes ,format="video/mp4", start_time=0)
+
+
 	
