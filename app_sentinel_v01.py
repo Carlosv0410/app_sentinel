@@ -25,7 +25,7 @@ from sklearn.decomposition import PCA #Principal Component Analysis Reduccion de
 import sklearn    
 from sklearn.cluster import KMeans
 from collections import Counter
-import cv2
+#import cv2
 # Inicio de sesion SentinelHub
 
 st.set_option('deprecation.showPyplotGlobalUse', False)
