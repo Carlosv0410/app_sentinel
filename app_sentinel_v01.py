@@ -659,8 +659,8 @@ if option =='🧪 Evaluación de la calidad el agua':
 
 			arrs = []
 			for band in s2_bands2017:
-			with rasterio.open(band) as f:
-				arrs.append(f.read(1))
+				with rasterio.open(band) as f:
+					arrs.append(f.read(1))
 			sentinel_img = np.array(arrs, dtype=arrs[0].dtype)
 			clipped_img = sentinel_img[:, 0:1080:, 0:1080]
 			np.seterr(divide='ignore', invalid='ignore')
