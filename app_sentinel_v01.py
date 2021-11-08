@@ -79,7 +79,7 @@ if option == '🛰 Visualización satelital':
 	st.warning('Coordenadas WGS84 para Sentinel: http://bboxfinder.com/#0.000000,0.000000,0.000000,0.000000')
 
 
-	st.warning('Ingrese coordenadas WGS84de para el area a monitorear')
+	st.warning('Ingrese coordenadas WGS84 para el area a monitorear')
 
 
 	col1, col2,col3 = st.columns(3)
