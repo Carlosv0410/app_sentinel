@@ -534,7 +534,7 @@ if option == '⛰ Evaluación de suelo':
 	with st.expander('Monitoreo con detección de cambios'):
 		st.success('El Machine Learning o aprendizaje automático posibilita la identificación de patrones en los datos basándose en algoritmos que clasifican cada factor según su grado de influencia aprendiendo y mejorando el proceso continuamente')
 		st.write('Las dos principales características que determinan la percepción de las imágenes satelitales son la resolución y la frecuencia de las imágenes utilizadas. La disponibilidad de imágenes de satélites es mayor cada día y las métricas ofertadas mejoran en consecuencia, abriendo el abanico de posibilidades para aplicaciones que aporten soluciones a actividades y empresas de todo tipo.')
-		st.info('Deteccion de cambios en la Zona 1 2017 y Zona 1 2020')
+		
 		video_file = open('deteccion_cambios.mp4', 'rb')
 		video_bytes = video_file.read()
 		st.video(video_bytes ,format="video/mp4", start_time=0)
