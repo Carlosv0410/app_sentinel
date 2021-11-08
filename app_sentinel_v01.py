@@ -1,3 +1,9 @@
+# APP SENTINEL HUB CALCULO DE INDICES
+#------------------------------------
+# Librerias
+import streamlit as st 
+import rasterio     # import the main rasterio function
+from rasterio.plot import show, show_hist # some specific rasterio functions we'll need
 import matplotlib   # matplotlib is the primary python plotting and viz library
 import matplotlib.pyplot as plt
 from PIL import Image
