@@ -995,7 +995,7 @@ if option == '🔎 Detección de cambios':
 	            feature = block.flatten()
 	            feature_vector_set.append(feature)
 	            j = j+1
-		        i = i+1
+		i = i+1
 				 
 	    FVS = np.dot(feature_vector_set, EVS)
 	    FVS = FVS - mean_vec
