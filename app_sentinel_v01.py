@@ -634,8 +634,8 @@ if option =='🧪 Evaluación de la calidad el agua':
 			fig = px.imshow(TOC_map, title='TOC')
 			st.write(fig)
 
-if option == '📊 Análisis temporal puntos de agua':
-	st.info('Analisis en diferentes periodos de tiempos')
+
+	st.info('Puntos de muestreo')
 
 	columna1, columna2 = st.columns(2)
 	with columna1:
@@ -646,56 +646,10 @@ if option == '📊 Análisis temporal puntos de agua':
 
 	with columna2:
 		zona = calidad_agua.seleccion_zona(select_zona_agua, year_zona)
-		st.pyplot(zona)
+		st.image(zona)
 
-	with st.expander('VisualizaciÓn map'):
+	with st.expander('Análisis en los puntos de muestreo'):
 
-		s2_bands = evaluacion_suelo.bandas(select_zona_agua, year_zona)
-
-		arrs = []
-		for band in s2_bands:
-		    with rasterio.open(band) as f:
-		        arrs.append(f.read(1))
-		sentinel_img = np.array(arrs, dtype=arrs[0].dtype)
-		clipped_img = sentinel_img[:, 0:1080:, 0:1080]
-		np.seterr(divide='ignore', invalid='ignore')
-		band02 = clipped_img[0] 
-		band03 = clipped_img[1] 
-		band04 = clipped_img[2] 
-		band08 = clipped_img[3] 
-		band11 = clipped_img[4] 
-		band12 = clipped_img[5]
-
-
-		NH3_N_map = math.e**(-8.8129 - 1.7044*np.log(band02.astype(float))  + 1.7620*np.log(band03.astype(float)) -1.8647*np.log(band04.astype(float))- 1.4377*np.log(band08.astype(float)))
-		COD_map = 2.76 -(17.27*band02.astype(float))+(72.15*band03.astype(float))-(12.11*band04.astype(float))
-		BOD_map = 1.79 -(0.789*band02.astype(float))+(52.36*band03.astype(float))-(3.28*band04.astype(float))
-		TOC_map = 6.41 -(85.29*band02.astype(float))+(2.05*band03.astype(float))-(29.96*band04.astype(float))
-
-		cola, colb ,colc, cold=st.columns(4)
-				
-		with cola:
-				
-			fig_index_agua1, ax = plt.subplots()
-
-			ax.imshow(NH3_N_map, cmap="RdYlGn" )
-			ax.set_title('NH3')
-			st.pyplot(fig_index_agua1)
-		with colb:
-			fig_index_agua2, ax = plt.subplots()
-			ax.imshow(COD_map, cmap="RdYlGn")
-			ax.set_title('COD')
-			st.pyplot(fig_index_agua2)
-		with colc:
-			fig_index_agua3, ax = plt.subplots()
-			ax.imshow(BOD_map, cmap="RdYlGn")
-			ax.set_title('BOD')
-			st.pyplot(fig_index_agua3)
-		with cold:
-			fig_index_agua4, ax = plt.subplots()
-			ax.imshow(TOC_map, cmap="RdYlGn")
-			ax.set_title('TOC')
-			st.pyplot(fig_index_agua4)
 
 		s2_bands2017 = evaluacion_suelo.bandas(select_zona_agua, 2017)
 
@@ -949,6 +903,3 @@ if option == '📊 Análisis temporal puntos de agua':
 		fig_final= px.line(df_resul_index, x = 'Año', y='Valor', color='Indice')
 		st.write(fig_final)
 
-
-
-	
