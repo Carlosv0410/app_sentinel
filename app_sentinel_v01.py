@@ -54,18 +54,18 @@ st.sidebar.video(video_bytes ,format="video/mp4", start_time=0)
 #st.sidebar.write('Sentinel')
 
 st.sidebar.title('Menu')
-option = st.sidebar.radio('Seleccione una opcion', ['💧 Conceciones', '🛰 Visualizacion satelital', '⛰ Evaluacion de suelo', '🧪 Evaluacion de la calidad el agua', '📊 Análisis temporal puntos de agua','🔎 Detección de cambios'])
+option = st.sidebar.radio('Seleccione una opcion', ['💧 Concesiones', '🛰 Visualización satelital', '⛰ Evaluación de suelo', '🧪 Evaluación de la calidad el agua', '📊 Análisis temporal puntos de agua','🔎 Detección de cambios'])
 
-if option == '💧 Conceciones':
+if option == '💧 Concesiones':
 
 	st.info('Concesiones Mineras')
 
 	columna1, columna2 = st.columns(2)
 	with columna1:
-		select_concesion = st.selectbox('🌐 Seleccione',['⚒ Conceciones','Zona 1 red','Zona 2 yellow','Zona 3 cian'])
+		select_concesion = st.selectbox('🌐 Seleccione',['⚒ Concesiones','Zona 1 red','Zona 2 yellow','Zona 3 cian'])
 
 	with columna2:
-		if select_concesion == '⚒ Conceciones':
+		if select_concesion == '⚒ Concesiones':
 			figura_conciones = concesiones.imagen_concesiones()
 			st.pyplot(figura_conciones)
 
@@ -74,12 +74,12 @@ if option == '💧 Conceciones':
 			zona = concesiones.seleccion_zona(select_concesion, year_zona)
 			st.pyplot(zona)
 
-if option == '🛰 Visualizacion satelital':
+if option == '🛰 Visualización satelital':
 
 	st.warning('Obtener coordenadas WGS84 para Sentinel desde el siguinete enlace: http://bboxfinder.com/#0.000000,0.000000,0.000000,0.000000')
 
 
-	st.warning('Ingrese las coordenadas de analisis en WGS84 e Intervalo de tiempo')
+	st.warning('Ingrese las coordenadas de análisis en WGS84 e Intervalo de tiempo')
 
 
 	col1, col2,col3 = st.columns(3)
@@ -158,7 +158,7 @@ if option == '🛰 Visualizacion satelital':
 
 	with col3:
 
-		with st.expander('Seleccion de bandas'):
+		with st.expander('Selección de bandas'):
 
 
 
@@ -467,7 +467,7 @@ if option == '🛰 Visualizacion satelital':
 
 		st.pyplot(b)
 
-if option == '⛰ Evaluacion de suelo':
+if option == '⛰ Evaluación de suelo':
 
 	zona_opcion = st.selectbox('🌐 Seleccione una zona',['Zona 1 red','Zona 2 yellow','Zona 3 cian'])
 	year_option = st.slider('Elija un año', 2017,2021,2017)
@@ -532,15 +532,15 @@ if option == '⛰ Evaluacion de suelo':
 			fig_bsi = px.imshow(bsi_index,title='BSI')
 			st.write(fig_bsi)
 
-if option =='🧪 Evaluacion de la calidad el agua':
+if option =='🧪 Evaluación de la calidad el agua':
 
-	with st.expander('Análisis anual de Indices'):
+	with st.expander('Análisis anual de Índices'):
 
 		zona_opcion_agua = st.selectbox('🌐 Seleccione una zona',['Zona 1 red','Zona 2 yellow','Zona 3 cian'])
 		year_option_agua = st.slider('Elija un año', 2017,2021,2017)
 		s2_bands = evaluacion_suelo.bandas(zona_opcion_agua, year_option_agua)
 			
-		st.header('Inidices de calidad de agua')
+		st.header('Ínidices de calidad de agua')
 
 		arrs = []
 		for band in s2_bands:
@@ -604,7 +604,7 @@ if option =='🧪 Evaluacion de la calidad el agua':
 			st.write('Min TOC: {m}'.format(m=round(TOC_map.min(),2)))
 
 
-	with st.expander('Análisis por ubicacion'):
+	with st.expander('Análisis por ubicaciÓn'):
 
 		indice_plot =st.selectbox('Seleccione el indice a analizar',['NH3','COD','BOD','TOC'])
 
@@ -639,7 +639,7 @@ if option == '📊 Análisis temporal puntos de agua':
 		zona = calidad_agua.seleccion_zona(select_zona_agua, year_zona)
 		st.pyplot(zona)
 
-	with st.expander('Visualizacion map'):
+	with st.expander('VisualizaciÓn map'):
 
 		s2_bands = evaluacion_suelo.bandas(select_zona_agua, year_zona)
 
