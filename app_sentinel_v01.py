@@ -54,7 +54,7 @@ st.sidebar.video(video_bytes ,format="video/mp4", start_time=0)
 #st.sidebar.write('Sentinel')
 
 st.sidebar.title('Menu')
-option = st.sidebar.radio('Seleccione una opcion', ['💧 Concesiones', '🛰 Visualización satelital', '⛰ Evaluación de suelo', '🧪 Evaluación de la calidad el agua', '📊 Análisis temporal puntos de agua'])
+option = st.sidebar.radio('Seleccione una opcion', ['💧 Concesiones', '🛰 Visualización satelital', '⛰ Evaluación de suelo', '🧪 Evaluación de la calidad el agua'])
 
 if option == '💧 Concesiones':
 
@@ -544,362 +544,369 @@ if option == '⛰ Evaluación de suelo':
 if option =='🧪 Evaluación de la calidad el agua':
 
 	with st.expander('Análisis anual de Índices'):
+		
+		try:
+			zona_opcion_agua = st.selectbox('🌐 Seleccione una zona',['Zona 1 red','Zona 2 yellow','Zona 3 cian','Anzu Norte', 'Berta 1', 'Confluencia', 'Cristobal','Genial', 'Vista Anzu'])
+			year_option_agua = st.slider('Elija un año', 2017,2021,2017)
+			s2_bands = evaluacion_suelo.bandas(zona_opcion_agua, year_option_agua)
 
-		zona_opcion_agua = st.selectbox('🌐 Seleccione una zona',['Zona 1 red','Zona 2 yellow','Zona 3 cian','Anzu Norte', 'Berta 1', 'Confluencia', 'Cristobal','Genial', 'Vista Anzu'])
-		year_option_agua = st.slider('Elija un año', 2017,2021,2017)
-		s2_bands = evaluacion_suelo.bandas(zona_opcion_agua, year_option_agua)
-			
-		st.header('Ínidices de calidad de agua')
+			st.header('Ínidices de calidad de agua')
 
-		arrs = []
-		for band in s2_bands:
-		    with rasterio.open(band) as f:
-		        arrs.append(f.read(1))
-		sentinel_img = np.array(arrs, dtype=arrs[0].dtype)
-		clipped_img = sentinel_img[:, 0:1080:, 0:1080]
-		np.seterr(divide='ignore', invalid='ignore')
-		band02 = clipped_img[0] 
-		band03 = clipped_img[1] 
-		band04 = clipped_img[2] 
-		band08 = clipped_img[3] 
-		band11 = clipped_img[4] 
-		band12 = clipped_img[5]
+			arrs = []
+			for band in s2_bands:
+			    with rasterio.open(band) as f:
+				arrs.append(f.read(1))
+			sentinel_img = np.array(arrs, dtype=arrs[0].dtype)
+			clipped_img = sentinel_img[:, 0:1080:, 0:1080]
+			np.seterr(divide='ignore', invalid='ignore')
+			band02 = clipped_img[0] 
+			band03 = clipped_img[1] 
+			band04 = clipped_img[2] 
+			band08 = clipped_img[3] 
+			band11 = clipped_img[4] 
+			band12 = clipped_img[5]
 
-		NH3_N_map = math.e**(-8.8129 - 1.7044*np.log(band02.astype(float))  + 1.7620*np.log(band03.astype(float)) -1.8647*np.log(band04.astype(float))- 1.4377*np.log(band08.astype(float)))
-		COD_map = 2.76 -(17.27*band02.astype(float))+(72.15*band03.astype(float))-(12.11*band04.astype(float))
-		BOD_map = 1.79 -(0.789*band02.astype(float))+(52.36*band03.astype(float))-(3.28*band04.astype(float))
-		TOC_map = 6.41 -(85.29*band02.astype(float))+(2.05*band03.astype(float))-(29.96*band04.astype(float))
+			NH3_N_map = math.e**(-8.8129 - 1.7044*np.log(band02.astype(float))  + 1.7620*np.log(band03.astype(float)) -1.8647*np.log(band04.astype(float))- 1.4377*np.log(band08.astype(float)))
+			COD_map = 2.76 -(17.27*band02.astype(float))+(72.15*band03.astype(float))-(12.11*band04.astype(float))
+			BOD_map = 1.79 -(0.789*band02.astype(float))+(52.36*band03.astype(float))-(3.28*band04.astype(float))
+			TOC_map = 6.41 -(85.29*band02.astype(float))+(2.05*band03.astype(float))-(29.96*band04.astype(float))
 
-		cola, colb ,colc, cold=st.columns(4)
-				
-		with cola:
-				
-			fig_index_agua1, ax = plt.subplots()
+			cola, colb ,colc, cold=st.columns(4)
 
-			ax.imshow(NH3_N_map, cmap="RdYlGn" )
-			ax.set_title('NH3')
-			st.pyplot(fig_index_agua1)
+			with cola:
 
-			st.write('\nMax NH3: {m}'.format(m=round(NH3_N_map.max(),2)))
-			st.write('Mean NH3: {m}'.format(m=round(NH3_N_map.mean(),2)))
-			st.write('Median NH3: {m}'.format(m=round(np.median(NH3_N_map),2)))
-			st.write('Min NH3: {m}'.format(m=round(NH3_N_map.min(),2)))
-		with colb:
-			fig_index_agua2, ax = plt.subplots()
-			ax.imshow(COD_map, cmap="RdYlGn")
-			ax.set_title('COD')
-			st.pyplot(fig_index_agua2)
-			st.write('\nMax COD: {m}'.format(m=round(COD_map.max(),2)))
-			st.write('Mean COD: {m}'.format(m=round(COD_map.mean(),2)))
-			st.write('Median COD: {m}'.format(m=round(np.median(COD_map),2)))
-			st.write('Min COD: {m}'.format(m=round(COD_map.min(),2)))
-		with colc:
-			fig_index_agua3, ax = plt.subplots()
-			ax.imshow(BOD_map, cmap="RdYlGn")
-			ax.set_title('BOD')
-			st.pyplot(fig_index_agua3)
-			st.write('\nMax BOD: {m}'.format(m=round(BOD_map.max(),2)))
-			st.write('Mean BOD: {m}'.format(m=round(BOD_map.mean(),2)))
-			st.write('Median BOD: {m}'.format(m=round(np.median(BOD_map),2)))
-			st.write('Min BOD: {m}'.format(m=round(BOD_map.min(),2)))
-		with cold:
-			fig_index_agua4, ax = plt.subplots()
-			ax.imshow(TOC_map, cmap="RdYlGn")
-			ax.set_title('TOC')
-			st.pyplot(fig_index_agua4)
-			st.write('\nMax TOC: {m}'.format(m=round(TOC_map.max(),2)))
-			st.write('Mean TOC: {m}'.format(m=round(TOC_map.mean(),2)))
-			st.write('Median TOC: {m}'.format(m=round(np.median(TOC_map),2)))
-			st.write('Min TOC: {m}'.format(m=round(TOC_map.min(),2)))
+				fig_index_agua1, ax = plt.subplots()
 
+				ax.imshow(NH3_N_map, cmap="RdYlGn" )
+				ax.set_title('NH3')
+				st.pyplot(fig_index_agua1)
+
+				st.write('\nMax NH3: {m}'.format(m=round(NH3_N_map.max(),2)))
+				st.write('Mean NH3: {m}'.format(m=round(NH3_N_map.mean(),2)))
+				st.write('Median NH3: {m}'.format(m=round(np.median(NH3_N_map),2)))
+				st.write('Min NH3: {m}'.format(m=round(NH3_N_map.min(),2)))
+			with colb:
+				fig_index_agua2, ax = plt.subplots()
+				ax.imshow(COD_map, cmap="RdYlGn")
+				ax.set_title('COD')
+				st.pyplot(fig_index_agua2)
+				st.write('\nMax COD: {m}'.format(m=round(COD_map.max(),2)))
+				st.write('Mean COD: {m}'.format(m=round(COD_map.mean(),2)))
+				st.write('Median COD: {m}'.format(m=round(np.median(COD_map),2)))
+				st.write('Min COD: {m}'.format(m=round(COD_map.min(),2)))
+			with colc:
+				fig_index_agua3, ax = plt.subplots()
+				ax.imshow(BOD_map, cmap="RdYlGn")
+				ax.set_title('BOD')
+				st.pyplot(fig_index_agua3)
+				st.write('\nMax BOD: {m}'.format(m=round(BOD_map.max(),2)))
+				st.write('Mean BOD: {m}'.format(m=round(BOD_map.mean(),2)))
+				st.write('Median BOD: {m}'.format(m=round(np.median(BOD_map),2)))
+				st.write('Min BOD: {m}'.format(m=round(BOD_map.min(),2)))
+			with cold:
+				fig_index_agua4, ax = plt.subplots()
+				ax.imshow(TOC_map, cmap="RdYlGn")
+				ax.set_title('TOC')
+				st.pyplot(fig_index_agua4)
+				st.write('\nMax TOC: {m}'.format(m=round(TOC_map.max(),2)))
+				st.write('Mean TOC: {m}'.format(m=round(TOC_map.mean(),2)))
+				st.write('Median TOC: {m}'.format(m=round(np.median(TOC_map),2)))
+				st.write('Min TOC: {m}'.format(m=round(TOC_map.min(),2)))
+		except:
+			st.sidebar.error("Zona de muestreo no explorada")
 
 	with st.expander('Análisis por ubicaciÓn'):
+		
+		try:
 
-		indice_plot =st.selectbox('Seleccione el indice a analizar',['NH3','COD','BOD','TOC'])
+			indice_plot =st.selectbox('Seleccione el indice a analizar',['NH3','COD','BOD','TOC'])
 
-		if indice_plot == 'NH3':
+			if indice_plot == 'NH3':
 
-			fig = px.imshow(NH3_N_map, title='NH3')
-			st.write(fig)
-		elif indice_plot == 'COD':
+				fig = px.imshow(NH3_N_map, title='NH3')
+				st.write(fig)
+			elif indice_plot == 'COD':
 
-			fig = px.imshow(COD_map, title='COD')
-			st.write(fig)
-		elif indice_plot == 'BOD':
+				fig = px.imshow(COD_map, title='COD')
+				st.write(fig)
+			elif indice_plot == 'BOD':
 
-			fig = px.imshow(BOD_map, title='BOD')
-			st.write(fig)
-		elif indice_plot == 'TOC':
+				fig = px.imshow(BOD_map, title='BOD')
+				st.write(fig)
+			elif indice_plot == 'TOC':
 
-			fig = px.imshow(TOC_map, title='TOC')
-			st.write(fig)
-
-
-	st.info('Puntos de muestreo')
-
-	columna1, columna2 = st.columns(2)
-	with columna1:
-		select_zona_agua = st.selectbox('🌐 Seleccione',['Zona 1 red','Zona 2 yellow','Zona 3 cian','Anzu Norte', 'Berta 1', 'Confluencia', 'Cristobal','Genial', 'Vista Anzu'])
-
-		year_zona = st.slider('Seleccione el año',2017,2021,2017,step=1)
-
-
-	with columna2:
-		zona = calidad_agua.seleccion_zona(select_zona_agua, year_zona)
-		st.image(zona)
+				fig = px.imshow(TOC_map, title='TOC')
+				st.write(fig)
+		except:
+			st.sidebar.error("Zona de muestreo no explorada")
 
 	with st.expander('Análisis en los puntos de muestreo'):
+		st.info('Puntos de muestreo')
+
+		columna1, columna2 = st.columns(2)
+		with columna1:
+			select_zona_agua = st.selectbox('🌐 Seleccione',['Zona 1 red','Zona 2 yellow','Zona 3 cian','Anzu Norte', 'Berta 1', 'Confluencia', 'Cristobal','Genial', 'Vista Anzu'])
+
+			year_zona = st.slider('Seleccione el año',2017,2021,2017,step=1)
+
+
+		with columna2:
+			zona = calidad_agua.seleccion_zona(select_zona_agua, year_zona)
+			st.image(zona)
 
+	with st.expander('Análisis en los puntos de muestreo'):
+		
+		try:
+			s2_bands2017 = evaluacion_suelo.bandas(select_zona_agua, 2017)
 
-		s2_bands2017 = evaluacion_suelo.bandas(select_zona_agua, 2017)
+			arrs = []
+			for band in s2_bands2017:
+			    with rasterio.open(band) as f:
+				arrs.append(f.read(1))
+			sentinel_img = np.array(arrs, dtype=arrs[0].dtype)
+			clipped_img = sentinel_img[:, 0:1080:, 0:1080]
+			np.seterr(divide='ignore', invalid='ignore')
+			band02 = clipped_img[0] 
+			band03 = clipped_img[1] 
+			band04 = clipped_img[2] 
+			band08 = clipped_img[3] 
+			band11 = clipped_img[4] 
+			band12 = clipped_img[5]
+
+			df_b02 = pd.DataFrame(band02)  #azul   
+			df_b03 = pd.DataFrame(band03) # verde
+			df_b04 = pd.DataFrame(band04) # roja
+			df_b08 = pd.DataFrame(band08) # NIR
+			df_b11 = pd.DataFrame(band11)
+			df_b12 = pd.DataFrame(band12) 
+
+
+
+			dato_b02 = df_b02[210][206]
+			dato_b03 = df_b03[210][206]
+			dato_b04 = df_b04[210][206]
+			dato_b08 = df_b08[210][206]
+			dato_b11 = df_b11[210][206]
+
+
+			NH3_N = math.e**(-8.8129 - 1.7044*math.log(dato_b02)  + 1.7620*math.log(dato_b03) -1.8647*math.log(dato_b04)- 1.4377*math.log(dato_b08))
+			BOD = 1.79 -(0.789*dato_b02)+(52.36*dato_b03)-(3.28*dato_b04)
+			COD = 2.76 -(17.27*dato_b02)+(72.15*dato_b03)-(12.11*dato_b04)
+			TOC = 6.41 -(85.29*dato_b02)+(2.05*dato_b03)-(29.96*dato_b04)
+
+			year_2017 = [2017,2017,2017,2017]
+			l_indice = ['NH3','BOD','COD','TOC']
+			data_2017 = [NH3_N,BOD,COD,TOC]
+
+			df2017={'Año':year_2017,
+					'Indice':l_indice,
+					'Valor':data_2017}
+
+			df_2017 = pd.DataFrame(df2017)
+
+			#st.write(df_2017)
 
-		arrs = []
-		for band in s2_bands2017:
-		    with rasterio.open(band) as f:
-		        arrs.append(f.read(1))
-		sentinel_img = np.array(arrs, dtype=arrs[0].dtype)
-		clipped_img = sentinel_img[:, 0:1080:, 0:1080]
-		np.seterr(divide='ignore', invalid='ignore')
-		band02 = clipped_img[0] 
-		band03 = clipped_img[1] 
-		band04 = clipped_img[2] 
-		band08 = clipped_img[3] 
-		band11 = clipped_img[4] 
-		band12 = clipped_img[5]
-
-		df_b02 = pd.DataFrame(band02)  #azul   
-		df_b03 = pd.DataFrame(band03) # verde
-		df_b04 = pd.DataFrame(band04) # roja
-		df_b08 = pd.DataFrame(band08) # NIR
-		df_b11 = pd.DataFrame(band11)
-		df_b12 = pd.DataFrame(band12) 
-
-
-
-		dato_b02 = df_b02[210][206]
-		dato_b03 = df_b03[210][206]
-		dato_b04 = df_b04[210][206]
-		dato_b08 = df_b08[210][206]
-		dato_b11 = df_b11[210][206]
+			s2_bands2018 = evaluacion_suelo.bandas(select_zona_agua, 2018)
 
-
-		NH3_N = math.e**(-8.8129 - 1.7044*math.log(dato_b02)  + 1.7620*math.log(dato_b03) -1.8647*math.log(dato_b04)- 1.4377*math.log(dato_b08))
-		BOD = 1.79 -(0.789*dato_b02)+(52.36*dato_b03)-(3.28*dato_b04)
-		COD = 2.76 -(17.27*dato_b02)+(72.15*dato_b03)-(12.11*dato_b04)
-		TOC = 6.41 -(85.29*dato_b02)+(2.05*dato_b03)-(29.96*dato_b04)
-
-		year_2017 = [2017,2017,2017,2017]
-		l_indice = ['NH3','BOD','COD','TOC']
-		data_2017 = [NH3_N,BOD,COD,TOC]
-
-		df2017={'Año':year_2017,
-				'Indice':l_indice,
-				'Valor':data_2017}
-
-		df_2017 = pd.DataFrame(df2017)
+			arrs = []
+			for band in s2_bands2018:
+			    with rasterio.open(band) as f:
+				arrs.append(f.read(1))
+			sentinel_img = np.array(arrs, dtype=arrs[0].dtype)
+			clipped_img = sentinel_img[:, 0:1080:, 0:1080]
+			np.seterr(divide='ignore', invalid='ignore')
+			band02 = clipped_img[0] 
+			band03 = clipped_img[1] 
+			band04 = clipped_img[2] 
+			band08 = clipped_img[3] 
+			band11 = clipped_img[4] 
+			band12 = clipped_img[5]
+
+			df_b02 = pd.DataFrame(band02)  #azul   
+			df_b03 = pd.DataFrame(band03) # verde
+			df_b04 = pd.DataFrame(band04) # roja
+			df_b08 = pd.DataFrame(band08) # NIR
+			df_b11 = pd.DataFrame(band11)
+			df_b12 = pd.DataFrame(band12) 
+
+
+
+			dato_b02 = df_b02[210][206]
+			dato_b03 = df_b03[210][206]
+			dato_b04 = df_b04[210][206]
+			dato_b08 = df_b08[210][206]
+			dato_b11 = df_b11[210][206]
+
+
+			NH3_N = math.e**(-8.8129 - 1.7044*math.log(dato_b02)  + 1.7620*math.log(dato_b03) -1.8647*math.log(dato_b04)- 1.4377*math.log(dato_b08))
+			BOD = 1.79 -(0.789*dato_b02)+(52.36*dato_b03)-(3.28*dato_b04)
+			COD = 2.76 -(17.27*dato_b02)+(72.15*dato_b03)-(12.11*dato_b04)
+			TOC = 6.41 -(85.29*dato_b02)+(2.05*dato_b03)-(29.96*dato_b04)
+
+			year_2018 = [2018,2018,2018,2018]
+			l_indice = ['NH3','BOD','COD','TOC']
+			data_2018 = [NH3_N,BOD,COD,TOC]
+
+			df2018={'Año':year_2018,
+					'Indice':l_indice,
+					'Valor':data_2018}
+
+			df_2018 = pd.DataFrame(df2018)
 
-		#st.write(df_2017)
+			#st.write(df_2018)
 
-		s2_bands2018 = evaluacion_suelo.bandas(select_zona_agua, 2018)
+			s2_bands2019 = evaluacion_suelo.bandas(select_zona_agua, 2019)
 
-		arrs = []
-		for band in s2_bands2018:
-		    with rasterio.open(band) as f:
-		        arrs.append(f.read(1))
-		sentinel_img = np.array(arrs, dtype=arrs[0].dtype)
-		clipped_img = sentinel_img[:, 0:1080:, 0:1080]
-		np.seterr(divide='ignore', invalid='ignore')
-		band02 = clipped_img[0] 
-		band03 = clipped_img[1] 
-		band04 = clipped_img[2] 
-		band08 = clipped_img[3] 
-		band11 = clipped_img[4] 
-		band12 = clipped_img[5]
-
-		df_b02 = pd.DataFrame(band02)  #azul   
-		df_b03 = pd.DataFrame(band03) # verde
-		df_b04 = pd.DataFrame(band04) # roja
-		df_b08 = pd.DataFrame(band08) # NIR
-		df_b11 = pd.DataFrame(band11)
-		df_b12 = pd.DataFrame(band12) 
-
-
-
-		dato_b02 = df_b02[210][206]
-		dato_b03 = df_b03[210][206]
-		dato_b04 = df_b04[210][206]
-		dato_b08 = df_b08[210][206]
-		dato_b11 = df_b11[210][206]
-
-
-		NH3_N = math.e**(-8.8129 - 1.7044*math.log(dato_b02)  + 1.7620*math.log(dato_b03) -1.8647*math.log(dato_b04)- 1.4377*math.log(dato_b08))
-		BOD = 1.79 -(0.789*dato_b02)+(52.36*dato_b03)-(3.28*dato_b04)
-		COD = 2.76 -(17.27*dato_b02)+(72.15*dato_b03)-(12.11*dato_b04)
-		TOC = 6.41 -(85.29*dato_b02)+(2.05*dato_b03)-(29.96*dato_b04)
-
-		year_2018 = [2018,2018,2018,2018]
-		l_indice = ['NH3','BOD','COD','TOC']
-		data_2018 = [NH3_N,BOD,COD,TOC]
-
-		df2018={'Año':year_2018,
-				'Indice':l_indice,
-				'Valor':data_2018}
-
-		df_2018 = pd.DataFrame(df2018)
-
-		#st.write(df_2018)
+			arrs = []
+			for band in s2_bands2019:
+			    with rasterio.open(band) as f:
+				arrs.append(f.read(1))
+			sentinel_img = np.array(arrs, dtype=arrs[0].dtype)
+			clipped_img = sentinel_img[:, 0:1080:, 0:1080]
+			np.seterr(divide='ignore', invalid='ignore')
+			band02 = clipped_img[0] 
+			band03 = clipped_img[1] 
+			band04 = clipped_img[2] 
+			band08 = clipped_img[3] 
+			band11 = clipped_img[4] 
+			band12 = clipped_img[5]
+
+			df_b02 = pd.DataFrame(band02)  #azul   
+			df_b03 = pd.DataFrame(band03) # verde
+			df_b04 = pd.DataFrame(band04) # roja
+			df_b08 = pd.DataFrame(band08) # NIR
+			df_b11 = pd.DataFrame(band11)
+			df_b12 = pd.DataFrame(band12) 
+
+
+
+			dato_b02 = df_b02[210][206]
+			dato_b03 = df_b03[210][206]
+			dato_b04 = df_b04[210][206]
+			dato_b08 = df_b08[210][206]
+			dato_b11 = df_b11[210][206]
 
-		s2_bands2019 = evaluacion_suelo.bandas(select_zona_agua, 2019)
-
-		arrs = []
-		for band in s2_bands2019:
-		    with rasterio.open(band) as f:
-		        arrs.append(f.read(1))
-		sentinel_img = np.array(arrs, dtype=arrs[0].dtype)
-		clipped_img = sentinel_img[:, 0:1080:, 0:1080]
-		np.seterr(divide='ignore', invalid='ignore')
-		band02 = clipped_img[0] 
-		band03 = clipped_img[1] 
-		band04 = clipped_img[2] 
-		band08 = clipped_img[3] 
-		band11 = clipped_img[4] 
-		band12 = clipped_img[5]
-
-		df_b02 = pd.DataFrame(band02)  #azul   
-		df_b03 = pd.DataFrame(band03) # verde
-		df_b04 = pd.DataFrame(band04) # roja
-		df_b08 = pd.DataFrame(band08) # NIR
-		df_b11 = pd.DataFrame(band11)
-		df_b12 = pd.DataFrame(band12) 
-
-
-
-		dato_b02 = df_b02[210][206]
-		dato_b03 = df_b03[210][206]
-		dato_b04 = df_b04[210][206]
-		dato_b08 = df_b08[210][206]
-		dato_b11 = df_b11[210][206]
-
-
-		NH3_N = math.e**(-8.8129 - 1.7044*math.log(dato_b02)  + 1.7620*math.log(dato_b03) -1.8647*math.log(dato_b04)- 1.4377*math.log(dato_b08))
-		BOD = 1.79 -(0.789*dato_b02)+(52.36*dato_b03)-(3.28*dato_b04)
-		COD = 2.76 -(17.27*dato_b02)+(72.15*dato_b03)-(12.11*dato_b04)
-		TOC = 6.41 -(85.29*dato_b02)+(2.05*dato_b03)-(29.96*dato_b04)
-
-		year_2019 = [2019,2019,2019,2019]
-		l_indice = ['NH3','BOD','COD','TOC']
-		data_2019 = [NH3_N,BOD,COD,TOC]
-
-		df2019={'Año':year_2019,
-				'Indice':l_indice,
-				'Valor':data_2019}
-
-		df_2019 = pd.DataFrame(df2019)
-
-		#st.write(df_2019)
-
-		s2_bands2020 = evaluacion_suelo.bandas(select_zona_agua, 2020)
-
-		arrs = []
-		for band in s2_bands2020:
-		    with rasterio.open(band) as f:
-		        arrs.append(f.read(1))
-		sentinel_img = np.array(arrs, dtype=arrs[0].dtype)
-		clipped_img = sentinel_img[:, 0:1080:, 0:1080]
-		np.seterr(divide='ignore', invalid='ignore')
-		band02 = clipped_img[0] 
-		band03 = clipped_img[1] 
-		band04 = clipped_img[2] 
-		band08 = clipped_img[3] 
-		band11 = clipped_img[4] 
-		band12 = clipped_img[5]
+
+			NH3_N = math.e**(-8.8129 - 1.7044*math.log(dato_b02)  + 1.7620*math.log(dato_b03) -1.8647*math.log(dato_b04)- 1.4377*math.log(dato_b08))
+			BOD = 1.79 -(0.789*dato_b02)+(52.36*dato_b03)-(3.28*dato_b04)
+			COD = 2.76 -(17.27*dato_b02)+(72.15*dato_b03)-(12.11*dato_b04)
+			TOC = 6.41 -(85.29*dato_b02)+(2.05*dato_b03)-(29.96*dato_b04)
+
+			year_2019 = [2019,2019,2019,2019]
+			l_indice = ['NH3','BOD','COD','TOC']
+			data_2019 = [NH3_N,BOD,COD,TOC]
+
+			df2019={'Año':year_2019,
+					'Indice':l_indice,
+					'Valor':data_2019}
+
+			df_2019 = pd.DataFrame(df2019)
 
-		df_b02 = pd.DataFrame(band02)  #azul   
-		df_b03 = pd.DataFrame(band03) # verde
-		df_b04 = pd.DataFrame(band04) # roja
-		df_b08 = pd.DataFrame(band08) # NIR
-		df_b11 = pd.DataFrame(band11)
-		df_b12 = pd.DataFrame(band12) 
+			#st.write(df_2019)
 
+			s2_bands2020 = evaluacion_suelo.bandas(select_zona_agua, 2020)
 
+			arrs = []
+			for band in s2_bands2020:
+			    with rasterio.open(band) as f:
+				arrs.append(f.read(1))
+			sentinel_img = np.array(arrs, dtype=arrs[0].dtype)
+			clipped_img = sentinel_img[:, 0:1080:, 0:1080]
+			np.seterr(divide='ignore', invalid='ignore')
+			band02 = clipped_img[0] 
+			band03 = clipped_img[1] 
+			band04 = clipped_img[2] 
+			band08 = clipped_img[3] 
+			band11 = clipped_img[4] 
+			band12 = clipped_img[5]
 
-		dato_b02 = df_b02[210][206]
-		dato_b03 = df_b03[210][206]
-		dato_b04 = df_b04[210][206]
-		dato_b08 = df_b08[210][206]
-		dato_b11 = df_b11[210][206]
+			df_b02 = pd.DataFrame(band02)  #azul   
+			df_b03 = pd.DataFrame(band03) # verde
+			df_b04 = pd.DataFrame(band04) # roja
+			df_b08 = pd.DataFrame(band08) # NIR
+			df_b11 = pd.DataFrame(band11)
+			df_b12 = pd.DataFrame(band12) 
 
 
-		NH3_N = math.e**(-8.8129 - 1.7044*math.log(dato_b02)  + 1.7620*math.log(dato_b03) -1.8647*math.log(dato_b04)- 1.4377*math.log(dato_b08))
-		BOD = 1.79 -(0.789*dato_b02)+(52.36*dato_b03)-(3.28*dato_b04)
-		COD = 2.76 -(17.27*dato_b02)+(72.15*dato_b03)-(12.11*dato_b04)
-		TOC = 6.41 -(85.29*dato_b02)+(2.05*dato_b03)-(29.96*dato_b04)
 
-		year_2020 = [2020,2020,2020,2020]
-		l_indice = ['NH3','BOD','COD','TOC']
-		data_2020 = [NH3_N,BOD,COD,TOC]
+			dato_b02 = df_b02[210][206]
+			dato_b03 = df_b03[210][206]
+			dato_b04 = df_b04[210][206]
+			dato_b08 = df_b08[210][206]
+			dato_b11 = df_b11[210][206]
 
-		df2020={'Año':year_2020,
-				'Indice':l_indice,
-				'Valor':data_2020}
 
-		df_2020 = pd.DataFrame(df2020)
+			NH3_N = math.e**(-8.8129 - 1.7044*math.log(dato_b02)  + 1.7620*math.log(dato_b03) -1.8647*math.log(dato_b04)- 1.4377*math.log(dato_b08))
+			BOD = 1.79 -(0.789*dato_b02)+(52.36*dato_b03)-(3.28*dato_b04)
+			COD = 2.76 -(17.27*dato_b02)+(72.15*dato_b03)-(12.11*dato_b04)
+			TOC = 6.41 -(85.29*dato_b02)+(2.05*dato_b03)-(29.96*dato_b04)
 
-		#st.write(df_2020)
+			year_2020 = [2020,2020,2020,2020]
+			l_indice = ['NH3','BOD','COD','TOC']
+			data_2020 = [NH3_N,BOD,COD,TOC]
 
-		s2_bands2021 = evaluacion_suelo.bandas(select_zona_agua, 2021)
+			df2020={'Año':year_2020,
+					'Indice':l_indice,
+					'Valor':data_2020}
 
-		arrs = []
-		for band in s2_bands2021:
-		    with rasterio.open(band) as f:
-		        arrs.append(f.read(1))
-		sentinel_img = np.array(arrs, dtype=arrs[0].dtype)
-		clipped_img = sentinel_img[:, 0:1080:, 0:1080]
-		np.seterr(divide='ignore', invalid='ignore')
-		band02 = clipped_img[0] 
-		band03 = clipped_img[1] 
-		band04 = clipped_img[2] 
-		band08 = clipped_img[3] 
-		band11 = clipped_img[4] 
-		band12 = clipped_img[5]
+			df_2020 = pd.DataFrame(df2020)
 
-		df_b02 = pd.DataFrame(band02)  #azul   
-		df_b03 = pd.DataFrame(band03) # verde
-		df_b04 = pd.DataFrame(band04) # roja
-		df_b08 = pd.DataFrame(band08) # NIR
-		df_b11 = pd.DataFrame(band11)
-		df_b12 = pd.DataFrame(band12) 
+			#st.write(df_2020)
 
+			s2_bands2021 = evaluacion_suelo.bandas(select_zona_agua, 2021)
 
+			arrs = []
+			for band in s2_bands2021:
+			    with rasterio.open(band) as f:
+				arrs.append(f.read(1))
+			sentinel_img = np.array(arrs, dtype=arrs[0].dtype)
+			clipped_img = sentinel_img[:, 0:1080:, 0:1080]
+			np.seterr(divide='ignore', invalid='ignore')
+			band02 = clipped_img[0] 
+			band03 = clipped_img[1] 
+			band04 = clipped_img[2] 
+			band08 = clipped_img[3] 
+			band11 = clipped_img[4] 
+			band12 = clipped_img[5]
 
-		dato_b02 = df_b02[210][206]
-		dato_b03 = df_b03[210][206]
-		dato_b04 = df_b04[210][206]
-		dato_b08 = df_b08[210][206]
-		dato_b11 = df_b11[210][206]
+			df_b02 = pd.DataFrame(band02)  #azul   
+			df_b03 = pd.DataFrame(band03) # verde
+			df_b04 = pd.DataFrame(band04) # roja
+			df_b08 = pd.DataFrame(band08) # NIR
+			df_b11 = pd.DataFrame(band11)
+			df_b12 = pd.DataFrame(band12) 
 
 
-		NH3_N = math.e**(-8.8129 - 1.7044*math.log(dato_b02)  + 1.7620*math.log(dato_b03) -1.8647*math.log(dato_b04)- 1.4377*math.log(dato_b08))
-		BOD = 1.79 -(0.789*dato_b02)+(52.36*dato_b03)-(3.28*dato_b04)
-		COD = 2.76 -(17.27*dato_b02)+(72.15*dato_b03)-(12.11*dato_b04)
-		TOC = 6.41 -(85.29*dato_b02)+(2.05*dato_b03)-(29.96*dato_b04)
 
-		year_2021 = [2021,2021,2021,2021]
-		l_indice = ['NH3','BOD','COD','TOC']
-		data_2021 = [NH3_N,BOD,COD,TOC]
+			dato_b02 = df_b02[210][206]
+			dato_b03 = df_b03[210][206]
+			dato_b04 = df_b04[210][206]
+			dato_b08 = df_b08[210][206]
+			dato_b11 = df_b11[210][206]
 
-		df2021={'Año':year_2021,
-				'Indice':l_indice,
-				'Valor':data_2021}
 
-		df_2021 = pd.DataFrame(df2021)
+			NH3_N = math.e**(-8.8129 - 1.7044*math.log(dato_b02)  + 1.7620*math.log(dato_b03) -1.8647*math.log(dato_b04)- 1.4377*math.log(dato_b08))
+			BOD = 1.79 -(0.789*dato_b02)+(52.36*dato_b03)-(3.28*dato_b04)
+			COD = 2.76 -(17.27*dato_b02)+(72.15*dato_b03)-(12.11*dato_b04)
+			TOC = 6.41 -(85.29*dato_b02)+(2.05*dato_b03)-(29.96*dato_b04)
 
-		#st.write(df_2021)
+			year_2021 = [2021,2021,2021,2021]
+			l_indice = ['NH3','BOD','COD','TOC']
+			data_2021 = [NH3_N,BOD,COD,TOC]
 
-		df_resul_index = pd.concat([df_2017,df_2018,df_2019,df_2020,df_2021])
+			df2021={'Año':year_2021,
+					'Indice':l_indice,
+					'Valor':data_2021}
 
-		#st.write(df_resul_index)
+			df_2021 = pd.DataFrame(df2021)
 
-		fig_final= px.line(df_resul_index, x = 'Año', y='Valor', color='Indice')
-		st.write(fig_final)
+			#st.write(df_2021)
 
+			df_resul_index = pd.concat([df_2017,df_2018,df_2019,df_2020,df_2021])
+
+			#st.write(df_resul_index)
+
+			fig_final= px.line(df_resul_index, x = 'Año', y='Valor', color='Indice')
+			st.write(fig_final)
+		except:
+			st.sidebar.error("Zona de muestreo no explorada")
