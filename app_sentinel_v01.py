@@ -941,8 +941,8 @@ if option == '🔎 Detección de cambios':
 
 
 
-	imagepath1 = 'Galeria concesiones\\Zona1\\2017.png'
-	imagepath2 = 'Galeria concesiones\\Zona1\\2020.png'
+	imagepath1 = 'Galeria_concesiones/Zona1/2017.png'
+	imagepath2 = 'Galeria_concesiones/Zona1/2020.png'
 
 
 
