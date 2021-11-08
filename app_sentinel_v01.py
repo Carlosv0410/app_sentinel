@@ -478,8 +478,8 @@ if option == '⛰ Evaluación de suelo':
 
 		arrs = []
 		for band in s2_bands:
-		    with rasterio.open(band) as f:
-			arrs.append(f.read(1))
+			with rasterio.open(band) as f:
+				arrs.append(f.read(1))
 
 		sentinel_img = np.array(arrs, dtype=arrs[0].dtype)
 
