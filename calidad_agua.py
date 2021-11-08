@@ -15,22 +15,17 @@ def  seleccion_zona(zona, year):
 		img5=Image.open('Evaluacion_suelo/Zona1/2021/2021.png')
 
 		if year==2017:
-			fig, ax = plt.subplots(figsize = (18,15))
-			ax.imshow(img1)
+			fig=img1
 		if year==2018:
-			fig, ax = plt.subplots(figsize = (18,15))
-			ax.imshow(img2)
+			fig=img2
 		if year==2019:
-			fig, ax = plt.subplots(figsize = (18,15))
-			ax.imshow(img3)
+			fig=img3
 		if year==2020:
-			fig, ax = plt.subplots(figsize = (18,15))
-			ax.imshow(img4)
+			fig=img4
 		if year==2021:
-			fig, ax = plt.subplots(figsize = (18,15))
-			ax.imshow(img5)
+			fig=img5
 
-	if zona =='Zona 2 yellow':
+	elif zona =='Zona 2 yellow':
 
 		img1=Image.open('Evaluacion_suelo/Zona2/2017/2017.png')
 		img2=Image.open('Evaluacion_suelo/Zona2/2018/2018.png')
@@ -38,24 +33,18 @@ def  seleccion_zona(zona, year):
 		img4=Image.open('Evaluacion_suelo/Zona2/2020/2020.png')
 		img5=Image.open('Evaluacion_suelo/Zona2/2021/2021.png')
 
-
 		if year==2017:
-			fig, ax = plt.subplots(figsize = (18,15))
-			ax.imshow(img1)
+			fig=img1
 		if year==2018:
-			fig, ax = plt.subplots(figsize = (18,15))
-			ax.imshow(img2)
+			fig=img2
 		if year==2019:
-			fig, ax = plt.subplots(figsize = (18,15))
-			ax.imshow(img3)
+			fig=img3
 		if year==2020:
-			fig, ax = plt.subplots(figsize = (18,15))
-			ax.imshow(img4)
+			fig=img4
 		if year==2021:
-			fig, ax = plt.subplots(figsize = (18,15))
-			ax.imshow(img5)
+			fig=img5
 
-	if zona =='Zona 3 cian':
+	elif zona =='Zona 3 cian':
 
 		img1=Image.open('Evaluacion_suelo/Zona3/2017/2017.png')
 		img2=Image.open('Evaluacion_suelo/Zona3/2018/2018.png')
@@ -64,22 +53,16 @@ def  seleccion_zona(zona, year):
 		img5=Image.open('Evaluacion_suelo/Zona3/2021/2021.png')
 
 		if year==2017:
-			fig, ax = plt.subplots(figsize = (18,15))
-			ax.imshow(img1)
+			fig=img1
 		if year==2018:
-			fig, ax = plt.subplots(figsize = (18,15))
-			ax.imshow(img2)
+			fig=img2
 		if year==2019:
-			fig, ax = plt.subplots(figsize = (18,15))
-			ax.imshow(img3)
+			fig=img3
 		if year==2020:
-			fig, ax = plt.subplots(figsize = (18,15))
-			ax.imshow(img4)
+			fig=img4
 		if year==2021:
-			fig, ax = plt.subplots(figsize = (18,15))
-			ax.imshow(img5)
+			fig=img5
+			
+	else:
+		fig = Image.open('Zona_estudio/Zona_de_estudio4.png')
 	return fig
-
-
-
-
