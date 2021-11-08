@@ -27,7 +27,7 @@ def  seleccion_zona(zona, year):
 		if year==2021:
 			fig=img5
 
-	if zona =='Zona 2 yellow':
+	elif zona =='Zona 2 yellow':
 
 		img1=Image.open('Galeria concesiones/Zona2/2017.png')
 		img2=Image.open('Galeria concesiones/Zona2/2018.png')
@@ -45,7 +45,7 @@ def  seleccion_zona(zona, year):
 			fig=img4
 		if year==2021:
 			fig=img5
-	if zona =='Zona 3 cian':
+	elif zona =='Zona 3 cian':
 
 		img1=Image.open('Galeria concesiones/Zona3/2017.png')
 		img2=Image.open('Galeria concesiones/Zona3/2018.png')
@@ -63,4 +63,9 @@ def  seleccion_zona(zona, year):
 			fig=img4
 		if year==2021:
 			fig=img5
+
+	else:
+
+		fig = Image.open('Zona de estudio/Zona_de_estudio4.png')
+
 	return fig
