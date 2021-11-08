@@ -468,69 +468,74 @@ if option == '🛰 Visualización satelital':
 		st.pyplot(b)
 
 if option == '⛰ Evaluación de suelo':
+	
+	try:
 
-	zona_opcion = st.selectbox('🌐 Seleccione una zona',['Zona 1 red','Zona 2 yellow','Zona 3 cian','Anzu Norte', 'Berta 1', 'Confluencia', 'Cristobal','Genial', 'Vista Anzu'])
-	year_option = st.slider('Elija un año', 2017,2021,2017)
+		zona_opcion = st.selectbox('🌐 Seleccione una zona',['Zona 1 red','Zona 2 yellow','Zona 3 cian','Anzu Norte', 'Berta 1', 'Confluencia', 'Cristobal','Genial', 'Vista Anzu'])
+		year_option = st.slider('Elija un año', 2017,2021,2017)
 
-	s2_bands = evaluacion_suelo.bandas(zona_opcion, year_option)
+		s2_bands = evaluacion_suelo.bandas(zona_opcion, year_option)
 
-	arrs = []
-	for band in s2_bands:
-	    with rasterio.open(band) as f:
-	        arrs.append(f.read(1))
+		arrs = []
+		for band in s2_bands:
+		    with rasterio.open(band) as f:
+			arrs.append(f.read(1))
 
-	sentinel_img = np.array(arrs, dtype=arrs[0].dtype)
+		sentinel_img = np.array(arrs, dtype=arrs[0].dtype)
 
-	clipped_img = sentinel_img
+		clipped_img = sentinel_img
 
-	np.seterr(divide='ignore', invalid='ignore')
+		np.seterr(divide='ignore', invalid='ignore')
 
-	band02 = clipped_img[0] 
-	band03 = clipped_img[1] 
-	band04 = clipped_img[2] 
-	band08 = clipped_img[3] 
-	band11 = clipped_img[4] 
-	band12 = clipped_img[5]
+		band02 = clipped_img[0] 
+		band03 = clipped_img[1] 
+		band04 = clipped_img[2] 
+		band08 = clipped_img[3] 
+		band11 = clipped_img[4] 
+		band12 = clipped_img[5]
 
-	with st.expander('Análisis NDVI y BSI'):
-		col5, col6 =st.columns(2)
+		with st.expander('Análisis de Índice de vegetación de diferencia normalizada (NDVI) e Índice de suelo desnudo (BSI)'):
+			col5, col6 =st.columns(2)
 
-		with col5:
-			ndvi_index = (band08.astype(float)-band04.astype(float) )/ (band08.astype(float)+band04.astype(float))
-			fig_index, ax = plt.subplots()
-			ax.imshow(ndvi_index, cmap="RdYlGn")
+			with col5:
+				ndvi_index = (band08.astype(float)-band04.astype(float) )/ (band08.astype(float)+band04.astype(float))
+				fig_index, ax = plt.subplots()
+				ax.imshow(ndvi_index, cmap="RdYlGn")
 
-			st.pyplot(fig_index)
+				st.pyplot(fig_index)
 
-			st.write('\nMax NDVI: {m}'.format(m=ndvi_index.max()))
-			st.write('Mean NDVI: {m}'.format(m=ndvi_index.mean()))
-			st.write('Median NDVI: {m}'.format(m=np.median(ndvi_index)))
-			st.write('Min NDVI: {m}'.format(m=ndvi_index.min()))
+				st.write('\nMax NDVI: {m}'.format(m=ndvi_index.max()))
+				st.write('Mean NDVI: {m}'.format(m=ndvi_index.mean()))
+				st.write('Median NDVI: {m}'.format(m=np.median(ndvi_index)))
+				st.write('Min NDVI: {m}'.format(m=ndvi_index.min()))
 
-		with col6:
+			with col6:
 
-			bsi_index = ((band12.astype(float)+band04.astype(float))-(band08.astype(float)+band02.astype(float)))/((band12.astype(float)+band04.astype(float))+(band08.astype(float)+band02.astype(float)))
-			fig_index2, ax = plt.subplots()
-			ax.imshow(bsi_index, cmap= "YlOrRd")
-			st.pyplot(fig_index2)
+				bsi_index = ((band12.astype(float)+band04.astype(float))-(band08.astype(float)+band02.astype(float)))/((band12.astype(float)+band04.astype(float))+(band08.astype(float)+band02.astype(float)))
+				fig_index2, ax = plt.subplots()
+				ax.imshow(bsi_index, cmap= "YlOrRd")
+				st.pyplot(fig_index2)
 
-			st.write('\nMax BSI: {m}'.format(m=bsi_index.max()))
-			st.write('Mean BSI: {m}'.format(m=bsi_index.mean()))
-			st.write('Median BSI: {m}'.format(m=np.median(bsi_index)))
-			st.write('Min BSI: {m}'.format(m=bsi_index.min()))
+				st.write('\nMax BSI: {m}'.format(m=bsi_index.max()))
+				st.write('Mean BSI: {m}'.format(m=bsi_index.mean()))
+				st.write('Median BSI: {m}'.format(m=np.median(bsi_index)))
+				st.write('Min BSI: {m}'.format(m=bsi_index.min()))
 
-	with st.expander('Ubicación NDVI y BSI'):
+		with st.expander('Ubicación NDVI y BSI'):
 
-		option_index_suelo = st.radio('Seleccione indice', ['NDVI','BSI'])
+			option_index_suelo = st.radio('Seleccione indice', ['NDVI','BSI'])
 
-		if option_index_suelo =='NDVI':
+			if option_index_suelo =='NDVI':
 
-			fig_ndvi = px.imshow(ndvi_index, title='NDVI')
-			st.write(fig_ndvi)
+				fig_ndvi = px.imshow(ndvi_index, title='NDVI')
+				st.write(fig_ndvi)
 
-		if option_index_suelo =='BSI':
-			fig_bsi = px.imshow(bsi_index,title='BSI')
-			st.write(fig_bsi)
+			if option_index_suelo =='BSI':
+				fig_bsi = px.imshow(bsi_index,title='BSI')
+				st.write(fig_bsi)
+	except:
+		st.sidebar.error("Zona de muestreo no explorada")
+		
 	with st.expander('Monitoreo con detección de cambios'):
 		st.success('El Machine Learning o aprendizaje automático posibilita la identificación de patrones en los datos basándose en algoritmos que clasifican cada factor según su grado de influencia aprendiendo y mejorando el proceso continuamente')
 		st.write('Las dos principales características que determinan la percepción de las imágenes satelitales son la resolución y la frecuencia de las imágenes utilizadas. La disponibilidad de imágenes de satélites es mayor cada día y las métricas ofertadas mejoran en consecuencia, abriendo el abanico de posibilidades para aplicaciones que aporten soluciones a actividades y empresas de todo tipo.')
@@ -613,7 +618,7 @@ if option =='🧪 Evaluación de la calidad el agua':
 		except:
 			st.sidebar.error("Zona de muestreo no explorada")
 
-	with st.expander('Análisis por ubicaciÓn'):
+	with st.expander('Análisis por ubicación'):
 		
 		try:
 
@@ -636,7 +641,7 @@ if option =='🧪 Evaluación de la calidad el agua':
 				fig = px.imshow(TOC_map, title='TOC')
 				st.write(fig)
 		except:
-			st.sidebar.error("Zona de muestreo no explorada")
+			st.error("Zona de muestreo no explorada")
 
 	with st.expander('Análisis en los puntos de muestreo'):
 		st.info('Puntos de muestreo')
@@ -907,4 +912,4 @@ if option =='🧪 Evaluación de la calidad el agua':
 			fig_final= px.line(df_resul_index, x = 'Año', y='Valor', color='Indice')
 			st.write(fig_final)
 		except:
-			st.sidebar.error("Zona de muestreo no explorada")
+			st.error("Zona de muestreo no explorada")
