@@ -46,7 +46,7 @@ if config.sh_client_id == '' or  config.sh_client_secret == '':
 
 #Inicio de la Aplicación
 #-----------------------
-st.title('Aplicativo Cálculo de Indices con imagenes satelitales')
+st.title('Sistema de Monitoreo ANZU')
 
 video_file = open('monitoring1.mp4', 'rb')
 video_bytes = video_file.read()
@@ -62,17 +62,17 @@ if option == '💧 Concesiones':
 
 	columna1, columna2 = st.columns(2)
 	with columna1:
-		select_concesion = st.selectbox('🌐 Seleccione',['⚒ Concesiones','Zona 1 red','Zona 2 yellow','Zona 3 cian'])
+		select_concesion = st.selectbox('🌐 Seleccione',['⚒ Concesiones','Zona 1 red','Zona 2 yellow','Zona 3 cian','Anzu Norte', 'Berta 1', 'Confluencia', 'Cristobal','Genial', 'Vista Anzu'])
 
 	with columna2:
 		if select_concesion == '⚒ Concesiones':
 			figura_conciones = concesiones.imagen_concesiones()
-			st.pyplot(figura_conciones)
+			st.image(figura_conciones)
 
 		else:
 			year_zona = st.slider('Seleccione el año',2017,2021,2017,step=1)
 			zona = concesiones.seleccion_zona(select_concesion, year_zona)
-			st.pyplot(zona)
+			st.image(zona)
 
 if option == '🛰 Visualización satelital':
 
@@ -469,7 +469,7 @@ if option == '🛰 Visualización satelital':
 
 if option == '⛰ Evaluación de suelo':
 
-	zona_opcion = st.selectbox('🌐 Seleccione una zona',['Zona 1 red','Zona 2 yellow','Zona 3 cian'])
+	zona_opcion = st.selectbox('🌐 Seleccione una zona',['Zona 1 red','Zona 2 yellow','Zona 3 cian','Anzu Norte', 'Berta 1', 'Confluencia', 'Cristobal','Genial', 'Vista Anzu'])
 	year_option = st.slider('Elija un año', 2017,2021,2017)
 
 	s2_bands = evaluacion_suelo.bandas(zona_opcion, year_option)
@@ -536,7 +536,7 @@ if option =='🧪 Evaluación de la calidad el agua':
 
 	with st.expander('Análisis anual de Índices'):
 
-		zona_opcion_agua = st.selectbox('🌐 Seleccione una zona',['Zona 1 red','Zona 2 yellow','Zona 3 cian'])
+		zona_opcion_agua = st.selectbox('🌐 Seleccione una zona',['Zona 1 red','Zona 2 yellow','Zona 3 cian','Anzu Norte', 'Berta 1', 'Confluencia', 'Cristobal','Genial', 'Vista Anzu'])
 		year_option_agua = st.slider('Elija un año', 2017,2021,2017)
 		s2_bands = evaluacion_suelo.bandas(zona_opcion_agua, year_option_agua)
 			
@@ -630,7 +630,7 @@ if option == '📊 Análisis temporal puntos de agua':
 
 	columna1, columna2 = st.columns(2)
 	with columna1:
-		select_zona_agua = st.selectbox('🌐 Seleccione',['Zona 1 red','Zona 2 yellow','Zona 3 cian'])
+		select_zona_agua = st.selectbox('🌐 Seleccione',['Zona 1 red','Zona 2 yellow','Zona 3 cian','Anzu Norte', 'Berta 1', 'Confluencia', 'Cristobal','Genial', 'Vista Anzu'])
 
 		year_zona = st.slider('Seleccione el año',2017,2021,2017,step=1)
 
