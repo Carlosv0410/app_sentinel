@@ -531,7 +531,7 @@ if option == '⛰ Evaluación de suelo':
 				st.write(fig_ndvi)
 
 			if option_index_suelo =='BSI':
-				fig_bsi = px.imshow(bsi_index,title='BSI', labels=dict(x="pixel x", y="pixel y", color="BSI")
+				fig_bsi = px.imshow(bsi_index,title='BSI', labels=dict(x="pixel x", y="pixel y", color="BSI"))
 				st.write(fig_bsi)
 	except:
 		st.sidebar.error("Zona de muestreo no explorada")
