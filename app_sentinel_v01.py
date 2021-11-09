@@ -521,17 +521,17 @@ if option == '⛰ Evaluación de suelo':
 				st.write('Median BSI: {m}'.format(m=np.median(bsi_index)))
 				st.write('Min BSI: {m}'.format(m=bsi_index.min()))
 
-		with st.expander('Ubicación NDVI y BSI'):
+		with st.expander('Detección de cambios NDVI y BSI'):
 
 			option_index_suelo = st.radio('Seleccione indice', ['NDVI','BSI'])
 
 			if option_index_suelo =='NDVI':
 
-				fig_ndvi = px.imshow(ndvi_index, title='NDVI')
+				fig_ndvi = px.imshow(ndvi_index, title='NDVI', labels=dict(x="pixel x", y="pixel y", color="NDVI"))
 				st.write(fig_ndvi)
 
 			if option_index_suelo =='BSI':
-				fig_bsi = px.imshow(bsi_index,title='BSI')
+				fig_bsi = px.imshow(bsi_index,title='BSI', labels=dict(x="pixel x", y="pixel y", color="BSI")
 				st.write(fig_bsi)
 	except:
 		st.sidebar.error("Zona de muestreo no explorada")
