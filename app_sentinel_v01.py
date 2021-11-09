@@ -54,7 +54,7 @@ st.sidebar.video(video_bytes ,format="video/mp4", start_time=0)
 #st.sidebar.write('Sentinel')
 
 st.sidebar.title('Menu')
-option = st.sidebar.radio('Seleccione una opcion', ['💧 Concesiones', '🛰 Visualización satelital', '⛰ Evaluación de suelo', '🧪 Evaluación de la calidad el agua'])
+option = st.sidebar.radio('Seleccione una opcion', ['💧 Concesiones', '🛰 Visualización satelital', '⛰ Evaluación de cobertura vegetal', '🧪 Evaluación de la calidad el agua'])
 
 if option == '💧 Concesiones':
 
@@ -467,7 +467,7 @@ if option == '🛰 Visualización satelital':
 
 		st.pyplot(b)
 
-if option == '⛰ Evaluación de suelo':
+if option == '⛰ Evaluación de cobertura vegetal':
 	
 	try:
 
