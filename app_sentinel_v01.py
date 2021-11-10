@@ -541,6 +541,7 @@ if option == '⛰ Evaluación de cobertura vegetal':
 		
 	
 	try:
+		
 		with st.expander('Principales índices espectrales para Sentinel'):
 			
 			gndvi_index = (band08.astype(float)-band03.astype(float) )/ (band08.astype(float)+band03.astype(float))
@@ -607,7 +608,10 @@ if option == '⛰ Evaluación de cobertura vegetal':
 				fig_ndgi, ax = plt.subplots()
 				ax.imshow(ndgi_index, cmap="RdYlGn")
 				st.pyplot(fig_ndgi)	
-				
+	except:
+		st.sidebar.error("Zona de muestreo no explorada")
+		
+	try:
 		with st.expander('Deteccion de cambios principales índices espectrales para Sentinel'):
 		
 			principales_indices = st.selectbox('Seleccione el indice',['GNDVI','EVI','AVI','SAVI','NDMI','MSI','GSI','NBRI','NDWI','NDSI','NDGI'])
@@ -658,9 +662,9 @@ if option == '⛰ Evaluación de cobertura vegetal':
 				st.write(fig)
 				st.success('El Índice Glaciar Diferencial Normalizado (NDGI) se utiliza para ayudar a detectar y monitorear glaciares utilizando las bandas espectrales verde y roja.')
 				
-				
 	except:
-		st.sidebar.error("Zona de muestreo no explorada")
+		st.sidebar.error("Zona de muestreo no explorada")				
+
 		
 	
 	
