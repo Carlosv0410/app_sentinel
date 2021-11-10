@@ -549,7 +549,7 @@ if option == '⛰ Evaluación de cobertura vegetal':
 			avi_index = (band08.astype(float)*(band08.astype(float)*(1-band04.astype(float))*(band08.astype(float)-band04.astype(float))))**0.3333
 			savi_index = (band08.astype(float)-band04.astype(float))/((band08.astype(float)+band04.astype(float)+0.428)*(1.428))
 			ndmi_index = (band08.astype(float)-band11.astype(float))/(band08.astype(float)+band11.astype(float))
-			msi_index = band11.astype(float)/band01.astype(float)
+			msi_index = band11.astype(float)/band08.astype(float)
 			gsi_index = (band09.astype(float)/band03.astype(float))-1
 			nbri_index = (band08.astype(float)-band12.astype(float))/(band08.astype(float)+band12.astype(float))
 			ndwi_index = (band03.astype(float)-band08.astype(float))/(band03.astype(float)+band08.astype(float))
