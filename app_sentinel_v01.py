@@ -564,49 +564,60 @@ if option == '⛰ Evaluación de cobertura vegetal':
 			with cola:
 				fig_gndvi, ax = plt.subplots()
 				ax.imshow(gndvi_index, cmap="RdYlGn")
+				ax.set_title('Índice de Vegetación de la Diferencia Normalizada Verde (GNDVI)',fontweight ="bold")
 				st.pyplot(fig_gndvi)
 				
 				fig_evi, ax = plt.subplots()
 				ax.imshow(evi_index, cmap="RdYlGn")
+				ax.set_title('Índice de Vegetación Mejorado (EVI)',fontweight ="bold")
 				st.pyplot(fig_evi)
 				
 				fig_avi, ax = plt.subplots()
 				ax.imshow(avi_index, cmap="RdYlGn")
+				ax.set_title('Índice de Vegetación Avanzada (AVI)',fontweight ="bold")
 				st.pyplot(fig_avi)
 				
 				fig_savi, ax = plt.subplots()
 				ax.imshow(savi_index, cmap="RdYlGn")
+				ax.set_title('Índice de Vegetación Ajustado al Suelo (SAVI)',fontweight ="bold")
 				st.pyplot(fig_savi)
 				
 					
 			with colb:
 				fig_ndmi, ax = plt.subplots()
 				ax.imshow(ndmi_index, cmap="RdYlGn")
+				ax.set_title('Índice de Diferencia Normalizada de Humedad (NDMI)',fontweight ="bold")
 				st.pyplot(fig_ndmi)
 				
 				fig_msi, ax = plt.subplots()
 				ax.imshow(msi_index, cmap="RdYlGn")
+				ax.set_title('Índice de Estrés Hídrico (MSI)',fontweight ="bold")
 				st.pyplot(fig_msi)
 				
 				fig_gsi, ax = plt.subplots()
 				ax.imshow(gsi_index, cmap="RdYlGn")
+				ax.set_title('Índice de Clorofila (GSI)',fontweight ="bold")
 				st.pyplot(fig_gsi)
 				
 				fig_nbri, ax = plt.subplots()
 				ax.imshow(nbri_index, cmap="RdYlGn")
+				ax.set_title('Índice de Calcinación Normalizado (NBRI)',fontweight ="bold")
 				st.pyplot(fig_nbri)
 				
 			with colc:
 				fig_ndwi, ax = plt.subplots()
 				ax.imshow(ndwi_index, cmap="RdYlGn")
+				ax.set_title('Índice Diferencial de Agua Normalizado (NDWI)',fontweight ="bold")
 				st.pyplot(fig_ndwi)
 				
 				fig_ndsi, ax = plt.subplots()
 				ax.imshow(ndsi_index, cmap="RdYlGn")
+				ax.set_title('Índice Diferencial Normalizado de Nieve (NDSI)',fontweight ="bold")
 				st.pyplot(fig_ndsi)
 				
 				fig_ndgi, ax = plt.subplots()
 				ax.imshow(ndgi_index, cmap="RdYlGn")
+				ax.set_title('Índice Glaciar Diferencial Normalizado (NDGI)',fontweight ="bold")
 				st.pyplot(fig_ndgi)	
 	except:
 		st.sidebar.error("Zona de muestreo no explorada")
