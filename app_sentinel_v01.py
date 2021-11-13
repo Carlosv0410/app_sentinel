@@ -686,7 +686,7 @@ if option == '⛰ Evaluación de cobertura vegetal':
 			indice_gndvi = (band08.astype(float)-band03.astype(float))/(band08.astype(float)+band03.astype(float))
 			indice_tgi = band03.astype(float)-0.39*band04.astype(float)-0.61*band02.astype(float)
 			indice_evi2 = (2.5*(band08.astype(float)-band04.astype(float))/ (band08.astype(float)+6*(band04.astype(float))+2.4*(band02.astype(float))+1))
-			indice_dbsi=((band11.astype(float)-(band03.astype(float))/(band11.astype(float)+(band03.astype(float)-(band08.astype(float)-band04.astype(float) )/ (band08.astype(float)+band04.astype(float)))									      
+			indice_dbsi=(band11.astype(float)-band03.astype(float))/(band11.astype(float)+band03.astype(float)-((band08.astype(float)-band04.astype(float))/ (band08.astype(float)+band04.astype(float))))									      
 			indice_ibi = (band11.astype(float)-band08.astype(float)/band11.astype(float)+band08.astype(float))-(((band08.astype(float)-band04.astype(float) )/ (band08.astype(float)+band04.astype(float)) +(band11.astype(float)-band08.astype(float)/band11.astype(float)+band08.astype(float))/2)/ (band11.astype(float)-band08.astype(float)/band11.astype(float)+band08.astype(float)))+((band08.astype(float)-band04.astype(float) )/ (band08.astype(float)+band04.astype(float))+((band11.astype(float)-band08.astype(float)/band11.astype(float)+band08.astype(float))/2))
 			indice_ci = (band04.astype(float)-band03.astype(float) )/ (band04.astype(float)+band03.astype(float))
 			indice_savi = ((band08.astype(float)-band05.astype(float))/(band08.astype(float)+band05.astype(float)+0.5))*(1+0.5)
