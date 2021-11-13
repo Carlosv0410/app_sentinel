@@ -691,7 +691,7 @@ if option == '⛰ Evaluación de cobertura vegetal':
 			indice_ci = (band04.astype(float)-band03.astype(float) )/ (band04.astype(float)+band03.astype(float))
 			indice_savi = ((band08.astype(float)-band05.astype(float))/(band08.astype(float)+band05.astype(float)+0.5))*(1+0.5)
 										 
-				cola,colb,colc = st.columns(3)
+			cola,colb,colc = st.columns(3)
 			
 			with cola:
 				fig_indice_ndvi, ax = plt.subplots()
