@@ -678,68 +678,66 @@ if option == '⛰ Evaluación de cobertura vegetal':
 	except:
 		st.sidebar.error("Zona de muestreo no explorada")				
 
-	try:
 		
-		with st.expander('Indices espectrales para Sentinel'):
-			indice_ndvi_ = (band08.astype(float)-band04.astype(float) )/ (band08.astype(float)+band04.astype(float))
-			indice_ndwi =  (band08.astype(float)-(band05.astype(float)*1))
-			indice_gndvi = (band08.astype(float)-band03.astype(float))/(band08.astype(float)+band03.astype(float))
-			indice_tgi = band03.astype(float)-0.39*band04.astype(float)-0.61*band02.astype(float)
-			indice_evi2 = (2.5*(band08.astype(float)-band04.astype(float))/ (band08.astype(float)+6*(band04.astype(float))+2.4*(band02.astype(float))+1))
-			indice_dbsi=(band11.astype(float)-band03.astype(float))/(band11.astype(float)+band03.astype(float)-((band08.astype(float)-band04.astype(float))/ (band08.astype(float)+band04.astype(float))))									      
-			indice_ibi = (band11.astype(float)-band08.astype(float)/band11.astype(float)+band08.astype(float))-(((band08.astype(float)-band04.astype(float) )/ (band08.astype(float)+band04.astype(float)) +(band11.astype(float)-band08.astype(float)/band11.astype(float)+band08.astype(float))/2)/ (band11.astype(float)-band08.astype(float)/band11.astype(float)+band08.astype(float)))+((band08.astype(float)-band04.astype(float) )/ (band08.astype(float)+band04.astype(float))+((band11.astype(float)-band08.astype(float)/band11.astype(float)+band08.astype(float))/2))
-			indice_ci = (band04.astype(float)-band03.astype(float) )/ (band04.astype(float)+band03.astype(float))
-			indice_savi = ((band08.astype(float)-band05.astype(float))/(band08.astype(float)+band05.astype(float)+0.5))*(1+0.5)
+	with st.expander('Indices espectrales para Sentinel'):
+		indice_ndvi_ = (band08.astype(float)-band04.astype(float) )/ (band08.astype(float)+band04.astype(float))
+		indice_ndwi =  (band08.astype(float)-(band05.astype(float)*1))
+		indice_gndvi = (band08.astype(float)-band03.astype(float))/(band08.astype(float)+band03.astype(float))
+		indice_tgi = band03.astype(float)-0.39*band04.astype(float)-0.61*band02.astype(float)
+		indice_evi2 = (2.5*(band08.astype(float)-band04.astype(float))/ (band08.astype(float)+6*(band04.astype(float))+2.4*(band02.astype(float))+1))
+		indice_dbsi=(band11.astype(float)-band03.astype(float))/(band11.astype(float)+band03.astype(float)-((band08.astype(float)-band04.astype(float))/ (band08.astype(float)+band04.astype(float))))									      
+		indice_ibi = (band11.astype(float)-band08.astype(float)/band11.astype(float)+band08.astype(float))-(((band08.astype(float)-band04.astype(float) )/ (band08.astype(float)+band04.astype(float)) +(band11.astype(float)-band08.astype(float)/band11.astype(float)+band08.astype(float))/2)/ (band11.astype(float)-band08.astype(float)/band11.astype(float)+band08.astype(float)))+((band08.astype(float)-band04.astype(float) )/ (band08.astype(float)+band04.astype(float))+((band11.astype(float)-band08.astype(float)/band11.astype(float)+band08.astype(float))/2))
+		indice_ci = (band04.astype(float)-band03.astype(float) )/ (band04.astype(float)+band03.astype(float))
+		indice_savi = ((band08.astype(float)-band05.astype(float))/(band08.astype(float)+band05.astype(float)+0.5))*(1+0.5)
 										 
-			cola,colb,colc = st.columns(3)
+		cola,colb,colc = st.columns(3)
+		
+		with cola:
+			fig_indice_ndvi, ax = plt.subplots()
+			ax.imshow(indice_ndvi, cmap="RdYlGn")
+			ax.set_title('Índice de Vegetación de la Diferencia Normalizada Verde (GNDVI)',fontweight ="bold")
+			st.pyplot(fig_indice_ndvi)
+				
+			fig_indice_ndwi, ax = plt.subplots()
+			ax.imshow(indice_ndwi, cmap="RdYlGn")
+			ax.set_title('Índice de Vegetación Mejorado (EVI)',fontweight ="bold")
+			st.pyplot(fig_indice_ndwi)
+				
+			fig_indice_gndvi, ax = plt.subplots()
+			ax.imshow(indice_gndvi, cmap="RdYlGn")
+			ax.set_title('Índice de Vegetación Avanzada (AVI)',fontweight ="bold")
+			st.pyplot(fig_indice_gndvi)
+		with colb:				
+			fig_indice_tgi, ax = plt.subplots()
+			ax.imshow(indice_tgi, cmap="RdYlGn")
+			ax.set_title('Índice de Vegetación Ajustado al Suelo (SAVI)',fontweight ="bold")
+			st.pyplot(fig_indice_tgi)
+				
+			fig_indice_evi2 , ax = plt.subplots()
+			ax.imshow(indice_evi2  , cmap="RdYlGn")
+			ax.set_title('Índice de Diferencia Normalizada de Humedad (NDMI)',fontweight ="bold")
+			st.pyplot(fig_indice_evi2 )
+				
+			fig_indice_dbsi, ax = plt.subplots()
+			ax.imshow(indice_dbsi, cmap="RdYlGn")
+			ax.set_title('Índice de Estrés Hídrico (MSI)',fontweight ="bold")
+			st.pyplot(fig_indice_dbsi)
+		with colc:
+			fig_indice_ibi, ax = plt.subplots()
+			ax.imshow(indice_ibi, cmap="RdYlGn")
+			ax.set_title('Índice de Clorofila (GSI)',fontweight ="bold")
+			st.pyplot(fig_indice_ibi)
 			
-			with cola:
-				fig_indice_ndvi, ax = plt.subplots()
-				ax.imshow(indice_ndvi, cmap="RdYlGn")
-				ax.set_title('Índice de Vegetación de la Diferencia Normalizada Verde (GNDVI)',fontweight ="bold")
-				st.pyplot(fig_indice_ndvi)
-				
-				fig_indice_ndwi, ax = plt.subplots()
-				ax.imshow(indice_ndwi, cmap="RdYlGn")
-				ax.set_title('Índice de Vegetación Mejorado (EVI)',fontweight ="bold")
-				st.pyplot(fig_indice_ndwi)
-				
-				fig_indice_gndvi, ax = plt.subplots()
-				ax.imshow(indice_gndvi, cmap="RdYlGn")
-				ax.set_title('Índice de Vegetación Avanzada (AVI)',fontweight ="bold")
-				st.pyplot(fig_indice_gndvi)
-			with colb:				
-				fig_indice_tgi, ax = plt.subplots()
-				ax.imshow(indice_tgi, cmap="RdYlGn")
-				ax.set_title('Índice de Vegetación Ajustado al Suelo (SAVI)',fontweight ="bold")
-				st.pyplot(fig_indice_tgi)
-				
-				fig_indice_evi2 , ax = plt.subplots()
-				ax.imshow(indice_evi2  , cmap="RdYlGn")
-				ax.set_title('Índice de Diferencia Normalizada de Humedad (NDMI)',fontweight ="bold")
-				st.pyplot(fig_indice_evi2 )
-				
-				fig_indice_dbsi, ax = plt.subplots()
-				ax.imshow(indice_dbsi, cmap="RdYlGn")
-				ax.set_title('Índice de Estrés Hídrico (MSI)',fontweight ="bold")
-				st.pyplot(fig_indice_dbsi)
-			with colc:
-				fig_indice_ibi, ax = plt.subplots()
-				ax.imshow(indice_ibi, cmap="RdYlGn")
-				ax.set_title('Índice de Clorofila (GSI)',fontweight ="bold")
-				st.pyplot(fig_indice_ibi)
-				
-				fig_indice_ci, ax = plt.subplots()
-				ax.imshow(indice_ci, cmap="RdYlGn")
-				ax.set_title('Índice de Calcinación Normalizado (NBRI)',fontweight ="bold")
-				st.pyplot(fig_indice_ci)									   
+			fig_indice_ci, ax = plt.subplots()
+			ax.imshow(indice_ci, cmap="RdYlGn")
+			ax.set_title('Índice de Calcinación Normalizado (NBRI)',fontweight ="bold")
+			st.pyplot(fig_indice_ci)									   
 			
-				fig_indice_savi, ax = plt.subplots()
-				ax.imshow(indice_savi, cmap="RdYlGn")
-				ax.set_title('Índice de Calcinación Normalizado (NBRI)',fontweight ="bold")
-				st.pyplot(fig_indice_savi)			
-	except:
-		st.sidebar.error("Zona de muestreo no explorada")
+			fig_indice_savi, ax = plt.subplots()
+			ax.imshow(indice_savi, cmap="RdYlGn")
+			ax.set_title('Índice de Calcinación Normalizado (NBRI)',fontweight ="bold")
+			st.pyplot(fig_indice_savi)			
+
 	
 		
 	with st.expander('Monitoreo con detección de cambios'):
