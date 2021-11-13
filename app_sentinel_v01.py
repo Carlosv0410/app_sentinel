@@ -695,47 +695,47 @@ if option == '⛰ Evaluación de cobertura vegetal':
 		with cola:
 			fig_indice_ndvi, ax = plt.subplots()
 			ax.imshow(indice_ndvi, cmap="RdYlGn")
-			ax.set_title('Índice de Vegetación de la Diferencia Normalizada Verde (GNDVI)',fontweight ="bold")
+			ax.set_title('Índice NDVI',fontweight ="bold")
 			st.pyplot(fig_indice_ndvi)
 				
 			fig_indice_ndwi, ax = plt.subplots()
 			ax.imshow(indice_ndwi, cmap="RdYlGn")
-			ax.set_title('Índice de Vegetación Mejorado (EVI)',fontweight ="bold")
+			ax.set_title('Índice NDWI',fontweight ="bold")
 			st.pyplot(fig_indice_ndwi)
 				
 			fig_indice_gndvi, ax = plt.subplots()
 			ax.imshow(indice_gndvi, cmap="RdYlGn")
-			ax.set_title('Índice de Vegetación Avanzada (AVI)',fontweight ="bold")
+			ax.set_title('Índice GNDVI',fontweight ="bold")
 			st.pyplot(fig_indice_gndvi)
 		with colb:				
 			fig_indice_tgi, ax = plt.subplots()
 			ax.imshow(indice_tgi, cmap="RdYlGn")
-			ax.set_title('Índice de Vegetación Ajustado al Suelo (SAVI)',fontweight ="bold")
+			ax.set_title('Índice TGI',fontweight ="bold")
 			st.pyplot(fig_indice_tgi)
 				
 			fig_indice_evi2 , ax = plt.subplots()
 			ax.imshow(indice_evi2  , cmap="RdYlGn")
-			ax.set_title('Índice de Diferencia Normalizada de Humedad (NDMI)',fontweight ="bold")
+			ax.set_title('Índice EVI2',fontweight ="bold")
 			st.pyplot(fig_indice_evi2 )
 				
 			fig_indice_dbsi, ax = plt.subplots()
 			ax.imshow(indice_dbsi, cmap="RdYlGn")
-			ax.set_title('Índice de Estrés Hídrico (MSI)',fontweight ="bold")
+			ax.set_title('Índice DBSI',fontweight ="bold")
 			st.pyplot(fig_indice_dbsi)
 		with colc:
 			fig_indice_ibi, ax = plt.subplots()
 			ax.imshow(indice_ibi, cmap="RdYlGn")
-			ax.set_title('Índice de Clorofila (GSI)',fontweight ="bold")
+			ax.set_title('Índice IBI',fontweight ="bold")
 			st.pyplot(fig_indice_ibi)
 			
 			fig_indice_ci, ax = plt.subplots()
 			ax.imshow(indice_ci, cmap="RdYlGn")
-			ax.set_title('Índice de Calcinación Normalizado (NBRI)',fontweight ="bold")
+			ax.set_title('Índice CI',fontweight ="bold")
 			st.pyplot(fig_indice_ci)									   
 			
 			fig_indice_savi, ax = plt.subplots()
 			ax.imshow(indice_savi, cmap="RdYlGn")
-			ax.set_title('Índice de Calcinación Normalizado (NBRI)',fontweight ="bold")
+			ax.set_title('Índice SAVI',fontweight ="bold")
 			st.pyplot(fig_indice_savi)			
 
 	
