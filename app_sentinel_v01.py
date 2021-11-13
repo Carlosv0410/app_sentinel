@@ -680,7 +680,7 @@ if option == '⛰ Evaluación de cobertura vegetal':
 
 		
 	with st.expander('Indices espectrales para Sentinel'):
-		indice_ndvi_ = (band08.astype(float)-band04.astype(float) )/ (band08.astype(float)+band04.astype(float))
+		indice_ndvi = (band08.astype(float)-band04.astype(float) )/ (band08.astype(float)+band04.astype(float))
 		indice_ndwi =  (band08.astype(float)-(band05.astype(float)*1))
 		indice_gndvi = (band08.astype(float)-band03.astype(float))/(band08.astype(float)+band03.astype(float))
 		indice_tgi = band03.astype(float)-0.39*band04.astype(float)-0.61*band02.astype(float)
