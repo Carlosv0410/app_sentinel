@@ -737,7 +737,44 @@ if option == '⛰ Evaluación de cobertura vegetal':
 			ax.imshow(indice_savi, cmap="RdYlGn")
 			ax.set_title('Índice SAVI',fontweight ="bold")
 			st.pyplot(fig_indice_savi)			
-
+		principales_indices2 = st.selectbox('Seleccione el indice',['NDVI','NDWI','GNDVI','TGI','EVI2','DBSI','IBI','CI','SAVI'])
+		
+		if principales_indices2 =='NDVI':
+			fig = px.imshow(indice_ndvi, title='GNDVI', labels=dict(x="pixel x", y="pixel y", color='GNDVI'))
+			st.write(fig)
+			st.success(' NDVI < 0 suelo desnudo, infraestructura, cuerpos de agua 0 - 0.6 ')
+		elif principales_indices2 =='NDWI':
+			fig = px.imshow(indice_ndwi,title='EVI', labels=dict(x="pixel x", y="pixel y", color='EVI'))
+			st.write(fig)
+			st.success('NDWI < = 0 Cuerpos hídricos 0 < NDWI < 0.1 suelo desnudo o cubiertas infraestructura ')
+		elif principales_indices2 =='GNDVI':
+			fig = px.imshow(indice_gndvi,title='AVI', labels=dict(x="pixel x", y="pixel y", color='AVI'))
+			st.write(fig)
+			st.success(' NDVI < 0 suelo desnudo, infraestructura, cuerpos de agua 0 - 0.6 ')
+		elif principales_indices2 =='TGI':
+			fig = px.imshow(indice_tgi,title='SAVI', labels=dict(x="pixel x", y="pixel y", color='SAVI'))
+			st.write(fig)
+			st.success('Triangular Greeness Index Infraestructura valores negativos, agricultura, zonas afectadas valores medios en la escala produccion media clorofila asociado actividad deforestacion por la actividad minera y otras actividades.  El índice TGI permitió identificar satisfactoriamente  cambios en las coberturas asociados a procesos tales como: ganadería, agricultura, tala de  árboles y adecuaciones de la infraestructura necesaria para el desarrollo de la actividad minera llevada a cabo en estas zonas. ')
+		elif principales_indices2 =='EVI2':
+			fig = px.imshow(indice_evi2,title='NDMI', labels=dict(x="pixel x", y="pixel y", color='NDMI'))
+			st.write(fig)
+			st.success('Indice de vegetacion mejorado 2')
+		elif principales_indices2 =='DBSI':
+			fig = px.imshow(indice_dbsi,title='MSI', labels=dict(x="pixel x", y="pixel y", color='MSI'))
+			st.write(fig)
+			st.success('Dry Bare-Soil Index')
+		elif principales_indices2 =='IBI':
+			fig = px.imshow(indice_ibi,title='GSI', labels=dict(x="pixel x", y="pixel y", color='GSI'))
+			st.write(fig)
+			st.success('Index-based Built-up Index')
+		elif principales_indices2 =='CI':
+			fig = px.imshow(indice_ci,title='CI', labels=dict(x="pixel x", y="pixel y", color='CI'))
+			st.write(fig)
+			#st.success('Los incendios forestales son un fenómeno natural o provocado por el hombre que destruye los recursos naturales, el ganado vivo, desequilibra el medio ambiente local, libera una gran cantidad de gases de efecto invernadero, etc.')
+		elif principales_indices2 =='SAVI':
+			fig = px.imshow(indice_savi,title='SAVI', labels=dict(x="pixel x", y="pixel y", color='SAVI'))
+			st.write(fig)
+			st.success('SAVI < 0  cuerpos de agua 0 - 0.3 medio rango de menor vigor vegetal o suelos sin vegetación')
 	
 		
 	with st.expander('Monitoreo con detección de cambios'):
