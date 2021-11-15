@@ -502,166 +502,73 @@ if option == '⛰ Evaluación de cobertura vegetal':
 				ndvi_index = (band08.astype(float)-band04.astype(float) )/(band08.astype(float)+band04.astype(float))
 
 				fig_ndvi = px.imshow(ndvi_index,title='Índice de vegetación de diferencia normalizada', labels=dict(x="pixel x", y="pixel y", color="NDVI"))
-				fig_ndvi.update_layout(margin=dict( l=0, r=10, b=10, t=20,pad=1),coloraxis_colorbar=dict( title="BSI", len=0.8 , thickness=5))
+				fig_ndvi.update_layout(margin=dict( l=0, r=10, b=10, t=30,pad=1),coloraxis_colorbar=dict( title="NDVI", len=0.8 , thickness=5))
 				st.plotly_chart(fig_ndvi,use_container_width=True)
 
 				st.write('\nMax NDVI: {m}'.format(m=ndvi_index.max()))
 				st.write('Mean NDVI: {m}'.format(m=ndvi_index.mean()))
 				st.write('Median NDVI: {m}'.format(m=np.median(ndvi_index)))
 				st.write('Min NDVI: {m}'.format(m=ndvi_index.min()))
+				st.success('El Índice de Vegetación de la Diferencia Normalizada (NDVI) es un indicador numérico que utiliza las bandas espectrales roja y cercana al infrarrojo. El NDVI está altamente asociado con el contenido de vegetación. ')
+
 			
 			with col2:
 				
 				bsi_index = ((band12.astype(float)+band04.astype(float))-(band08.astype(float)+band02.astype(float)))/((band12.astype(float)+band04.astype(float))+(band08.astype(float)+band02.astype(float)))
 
 				fig_bsi = px.imshow(bsi_index,title='Índice de suelo desnudo', labels=dict(x="pixel x", y="pixel y", color="BSI"))
-				fig_bsi.update_layout(margin=dict( l=0, r=10, b=10, t=20,pad=1),coloraxis_colorbar=dict( title="BSI", len=0.8 , thickness=5))
+				fig_bsi.update_layout(margin=dict( l=0, r=10, b=10, t=30,pad=1),coloraxis_colorbar=dict( title="BSI", len=0.8 , thickness=5))
 				st.plotly_chart(fig_bsi,use_container_width=True)
 
 				st.write('\nMax BSI: {m}'.format(m=bsi_index.max()))
 				st.write('Mean BSI: {m}'.format(m=bsi_index.mean()))
 				st.write('Median BSI: {m}'.format(m=np.median(bsi_index)))
 				st.write('Min BSI: {m}'.format(m=bsi_index.min()))
-				
+				st.success('El Índice de Suelo Desnudo (BSI) es un indicador numérico que combina bandas espectrales azules, rojas, infrarrojas cercanas e infrarrojas de onda corta para capturar las variaciones del suelo. Estas bandas espectrales se utilizan de manera normalizada.')
+
 	except:
 		st.sidebar.error("Zona de muestreo no explorada")
 		
 	
 	try:
 		
-		with st.expander('Principales índices espectrales para Sentinel'):
+		with st.expander('Principales índices espectrales para Sentinel 2'):
 			
 			gndvi_index = (band08.astype(float)-band03.astype(float) )/ (band08.astype(float)+band03.astype(float))
-			evi_index = 2.5*((band08.astype(float)-band04.astype(float) )/ (band08.astype(float)+6*band04.astype(float)-7.5*band04.astype(float)+1))
-			avi_index = (band08.astype(float)*(band08.astype(float)*(1-band04.astype(float))*(band08.astype(float)-band04.astype(float))))**0.3333
-			savi_index = (band08.astype(float)-band04.astype(float))/((band08.astype(float)+band04.astype(float)+0.428)*(1.428))
 			ndmi_index = (band08.astype(float)-band11.astype(float))/(band08.astype(float)+band11.astype(float))
-			msi_index = band11.astype(float)/band08.astype(float)
-			gsi_index = (band09.astype(float)/band03.astype(float))-1
-			nbri_index = (band08.astype(float)-band12.astype(float))/(band08.astype(float)+band12.astype(float))
+			gci_index = (band09.astype(float)/band03.astype(float))-1
 			ndwi_index = (band03.astype(float)-band08.astype(float))/(band03.astype(float)+band08.astype(float))
-			ndsi_index = (band03.astype(float)-band11.astype(float))/(band03.astype(float)+band11.astype(float))
-			ndgi_index = (band03.astype(float)-band04.astype(float))/(band03.astype(float)+band04.astype(float))
-			
-			
-			
 
-			cola,colb,colc = st.columns(3)
+			cola,colb = st.columns(2)
 			
 			with cola:
-				fig_gndvi, ax = plt.subplots()
-				ax.imshow(gndvi_index, cmap="RdYlGn")
-				ax.set_title('Índice de Vegetación de la Diferencia Normalizada Verde (GNDVI)',fontweight ="bold")
-				st.pyplot(fig_gndvi)
 				
-				fig_evi, ax = plt.subplots()
-				ax.imshow(evi_index, cmap="RdYlGn")
-				ax.set_title('Índice de Vegetación Mejorado (EVI)',fontweight ="bold")
-				st.pyplot(fig_evi)
+				fig_gndvi_index = px.imshow(gndvi_index,title='Índice de Vegetación de la Diferencia Normalizada Verde', labels=dict(x="pixel x", y="pixel y", color="GNDVI"))
+				fig_gndvi_index.update_layout(margin=dict( l=0, r=10, b=10, t=30,pad=1),coloraxis_colorbar=dict( title="GNDVI", len=0.8 , thickness=5))
+				st.plotly_chart(fig_gndvi_index,use_container_width=True)
+				st.success('El Índice de Vegetación de la Diferencia Normalizada Verde (GNDVI) es una versión modificada del NDVI para que sea más sensible a la variación del contenido de clorofila en el cultivo.')
 				
-				fig_avi, ax = plt.subplots()
-				ax.imshow(avi_index, cmap="RdYlGn")
-				ax.set_title('Índice de Vegetación Avanzada (AVI)',fontweight ="bold")
-				st.pyplot(fig_avi)
+				fig_gci_index = px.imshow(gci_index,title='Índice de Clorofila', labels=dict(x="pixel x", y="pixel y", color="GCI"))
+				fig_gci_index.update_layout(margin=dict( l=0, r=10, b=10, t=30,pad=1),coloraxis_colorbar=dict( title="GCI", len=0.8 , thickness=5))
+				st.plotly_chart(fig_gci_index,use_container_width=True)
+				st.success('En la teledetección, el Índice de Clorofila se utiliza para estimar el contenido de clorofila en las hojas de diversas especies de plantas. El contenido de clorofila refleja el estado fisiológico de la vegetación; disminuye en las plantas estresadas y, por lo tanto, puede utilizarse como medida de la salud de las plantas (EOS, 2019).')
 				
-				fig_savi, ax = plt.subplots()
-				ax.imshow(savi_index, cmap="RdYlGn")
-				ax.set_title('Índice de Vegetación Ajustado al Suelo (SAVI)',fontweight ="bold")
-				st.pyplot(fig_savi)
-				
-					
 			with colb:
-				fig_ndmi, ax = plt.subplots()
-				ax.imshow(ndmi_index, cmap="RdYlGn")
-				ax.set_title('Índice de Diferencia Normalizada de Humedad (NDMI)',fontweight ="bold")
-				st.pyplot(fig_ndmi)
 				
-				fig_msi, ax = plt.subplots()
-				ax.imshow(msi_index, cmap="RdYlGn")
-				ax.set_title('Índice de Estrés Hídrico (MSI)',fontweight ="bold")
-				st.pyplot(fig_msi)
+				fig_ndmi_index = px.imshow(ndmi_index,title='Índice de Diferencia Normalizada de Humedad' , labels=dict(x="pixel x", y="pixel y", color="NDMI"))
+				fig_ndmi_index.update_layout(margin=dict( l=0, r=10, b=10, t=30,pad=1),coloraxis_colorbar=dict( title="NDMI", len=0.8 , thickness=5))
+				st.plotly_chart(fig_ndmi_index,use_container_width=True)
+				st.success('El Índice de Diferencia Normalizada de Humedad (NDMI) se utiliza para determinar el contenido de agua de la vegetación.')
+							
+				fig_ndwi_index = px.imshow(ndwi_index,title='Índice Diferencial de Agua Normalizado', labels=dict(x="pixel x", y="pixel y", color="NDWI"))
+				fig_ndwi_index.update_layout(margin=dict( l=0, r=10, b=10, t=30,pad=1),coloraxis_colorbar=dict( title="NDWI", len=0.8 , thickness=5))
+				st.plotly_chart(fig_ndwi_index,use_container_width=True)
+				st.success('El Índice Diferencial de Agua Normalizado (NDWI) se utiliza para el análisis de masas de agua. El índice utiliza bandas verdes y casi infrarrojas de imágenes de teledetección. El NDWI puede mejorar la información sobre el agua de manera eficiente en la mayoría de los casos. Es sensible a la acumulación de tierra y resulta en la sobreestimación de los cuerpos de agua.')
 				
-				fig_gsi, ax = plt.subplots()
-				ax.imshow(gsi_index, cmap="RdYlGn")
-				ax.set_title('Índice de Clorofila (GSI)',fontweight ="bold")
-				st.pyplot(fig_gsi)
-				
-				fig_nbri, ax = plt.subplots()
-				ax.imshow(nbri_index, cmap="RdYlGn")
-				ax.set_title('Índice de Calcinación Normalizado (NBRI)',fontweight ="bold")
-				st.pyplot(fig_nbri)
-				
-			with colc:
-				fig_ndwi, ax = plt.subplots()
-				ax.imshow(ndwi_index, cmap="RdYlGn")
-				ax.set_title('Índice Diferencial de Agua Normalizado (NDWI)',fontweight ="bold")
-				st.pyplot(fig_ndwi)
-				
-				fig_ndsi, ax = plt.subplots()
-				ax.imshow(ndsi_index, cmap="RdYlGn")
-				ax.set_title('Índice Diferencial Normalizado de Nieve (NDSI)',fontweight ="bold")
-				st.pyplot(fig_ndsi)
-				
-				fig_ndgi, ax = plt.subplots()
-				ax.imshow(ndgi_index, cmap="RdYlGn")
-				ax.set_title('Índice Glaciar Diferencial Normalizado (NDGI)',fontweight ="bold")
-				st.pyplot(fig_ndgi)	
+	
 	except:
 		st.sidebar.error("Zona de muestreo no explorada")
 		
-	try:
-		with st.expander('Deteccion de cambios principales índices espectrales para Sentinel'):
-		
-			principales_indices = st.selectbox('Seleccione el indice',['GNDVI','EVI','AVI','SAVI','NDMI','MSI','GSI','NBRI','NDWI','NDSI','NDGI'])
-		
-			if principales_indices =='GNDVI':
-				fig = px.imshow(gndvi_index, title='GNDVI', labels=dict(x="pixel x", y="pixel y", color='GNDVI'))
-				st.write(fig)
-				st.success('El Índice de Vegetación de la Diferencia Normalizada Verde (GNDVI) es una versión modificada del NDVI para que sea más sensible a la variación del contenido de clorofila en el cultivo.')
-			elif principales_indices =='EVI':
-				fig = px.imshow(evi_index,title='EVI', labels=dict(x="pixel x", y="pixel y", color='EVI'))
-				st.write(fig)
-				st.success('El Índice de Vegetación Mejorado (EVI) es similar al NDVIy puede ser usado para cuantificar el verdor de la vegetación. ')
-			elif principales_indices =='AVI':
-				fig = px.imshow(avi_index,title='AVI', labels=dict(x="pixel x", y="pixel y", color='AVI'))
-				st.write(fig)
-				st.success('El Índice de Vegetación Avanzada (AVI) es un indicador numérico, similar al NDVI, que utiliza las bandas espectrales roja y cercana al infrarrojo. ')
-			elif principales_indices =='SAVI':
-				fig = px.imshow(savi_index,title='SAVI', labels=dict(x="pixel x", y="pixel y", color='SAVI'))
-				st.write(fig)
-				st.success('El Índice de Vegetación Ajustado al Suelo (SAVI) se utiliza para corregir el NDVI por la influencia del brillo del suelo en áreas donde la cobertura vegetativa es baja.')
-			elif principales_indices =='NDMI':
-				fig = px.imshow(ndmi_index,title='NDMI', labels=dict(x="pixel x", y="pixel y", color='NDMI'))
-				st.write(fig)
-				st.success('El Índice de Diferencia Normalizada de Humedad (NDMI) se utiliza para determinar el contenido de agua de la vegetación.')
-			elif principales_indices =='MSI':
-				fig = px.imshow(msi_index,title='MSI', labels=dict(x="pixel x", y="pixel y", color='MSI'))
-				st.write(fig)
-				st.success('El Índice de Estrés Hídrico se utiliza para el análisis de estrés en el dosel, la predicción de la productividad y el modelado biofísico. ')
-			elif principales_indices =='GSI':
-				fig = px.imshow(gsi_index,title='GSI', labels=dict(x="pixel x", y="pixel y", color='GSI'))
-				st.write(fig)
-				st.success('En la teledetección, el Índice de Clorofila se utiliza para estimar el contenido de clorofila en las hojas de diversas especies de plantas.')
-			elif principales_indices =='NBRI':
-				fig = px.imshow(nbri_index,title='NBRI', labels=dict(x="pixel x", y="pixel y", color='NBRI'))
-				st.write(fig)
-				st.success('Los incendios forestales son un fenómeno natural o provocado por el hombre que destruye los recursos naturales, el ganado vivo, desequilibra el medio ambiente local, libera una gran cantidad de gases de efecto invernadero, etc.')
-			elif principales_indices =='NDWI':
-				fig = px.imshow(ndwi_index,title='NDWI', labels=dict(x="pixel x", y="pixel y", color='NDWI'))
-				st.write(fig)
-				st.success('El Índice Diferencial de Agua Normalizado (NDWI) se utiliza para el análisis de masas de agua.')
-			elif principales_indices =='NDSI':
-				fig = px.imshow(ndsi_index,title='NDSI', labels=dict(x="pixel x", y="pixel y", color='NDSI'))
-				st.write(fig)
-				st.success('El Índice Diferencial Normalizado de Nieve (NDSI) es un indicador numérico que muestra la cobertura de nieve en áreas terrestres. ')
-				
-			elif principales_indices =='NDGI':
-				fig = px.imshow(ndgi_index,title='NDGI', labels=dict(x="pixel x", y="pixel y", color='NDGI'))
-				st.write(fig)
-				st.success('El Índice Glaciar Diferencial Normalizado (NDGI) se utiliza para ayudar a detectar y monitorear glaciares utilizando las bandas espectrales verde y roja.')
-				
-	except:
-		st.sidebar.error("Zona de muestreo no explorada")				
 
 		
 	with st.expander('Indices espectrales para Sentinel'):
