@@ -3,10 +3,12 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 from PIL import Image
 
+@st.cache
 def  imagen_concesiones():
 	im = Image.open('Zona_estudio/Zona_de_estudio3.png')
 	return im
 
+@st.cache
 def  seleccion_zona(zona, year):
 	if zona =='Zona 1 red':
 
