@@ -470,7 +470,6 @@ if option == '🛰 Visualización satelital':
 if option == '⛰ Evaluación de cobertura vegetal':
 	
 	try:
-
 		zona_opcion = st.selectbox('🌐 Seleccione una zona',['Zona 1 red','Zona 2 yellow','Zona 3 cian','Anzu Norte', 'Berta 1', 'Confluencia', 'Cristobal','Genial', 'Vista Anzu'])
 		year_option = st.slider('Elija un año', 2017,2021,2017)
 
@@ -482,9 +481,7 @@ if option == '⛰ Evaluación de cobertura vegetal':
 				arrs.append(f.read(1))
 
 		sentinel_img = np.array(arrs, dtype=arrs[0].dtype)
-
 		clipped_img = sentinel_img
-
 		np.seterr(divide='ignore', invalid='ignore')
 
 		band02 = clipped_img[0] 
@@ -498,46 +495,29 @@ if option == '⛰ Evaluación de cobertura vegetal':
 		band06 = clipped_img[8]
 
 		with st.expander('Análisis de Índice de vegetación de diferencia normalizada (NDVI) e Índice de suelo desnudo (BSI)'):
-			col5, col6 =st.columns(2)
 
-			with col5:
-				ndvi_index = (band08.astype(float)-band04.astype(float) )/ (band08.astype(float)+band04.astype(float))
-				fig_index, ax = plt.subplots()
-				ax.imshow(ndvi_index, cmap="RdYlGn")
+			ndvi_index = (band08.astype(float)-band04.astype(float) )/(band08.astype(float)+band04.astype(float))
+			
+			fig_ndvi = px.imshow(ndvi_index,title='Índice de vegetación de diferencia normalizada', labels=dict(x="pixel x", y="pixel y", color="NDVI"))
+			fig_ndvi.update_layout(margin=dict( l=0, r=10, b=10, t=20,pad=1),coloraxis_colorbar=dict( title="BSI", len=0.8 , thickness=5))
+			st.plotly_chart(fig_ndvi,use_container_width=True)
+			
+			st.write('\nMax NDVI: {m}'.format(m=ndvi_index.max()))
+			st.write('Mean NDVI: {m}'.format(m=ndvi_index.mean()))
+			st.write('Median NDVI: {m}'.format(m=np.median(ndvi_index)))
+			st.write('Min NDVI: {m}'.format(m=ndvi_index.min()))
 
-				st.pyplot(fig_index)
+			bsi_index = ((band12.astype(float)+band04.astype(float))-(band08.astype(float)+band02.astype(float)))/((band12.astype(float)+band04.astype(float))+(band08.astype(float)+band02.astype(float)))
+			
+			fig_bsi = px.imshow(bsi_index,title='Índice de suelo desnudo' labels=dict(x="pixel x", y="pixel y", color="BSI")
+			fig_bsi.update_layout(margin=dict( l=0, r=10, b=10, t=20,pad=1),coloraxis_colorbar=dict( title="BSI", len=0.8 , thickness=5))
+			st.plotly_chart(fig_bsi,use_container_width=True)
 
-				st.write('\nMax NDVI: {m}'.format(m=ndvi_index.max()))
-				st.write('Mean NDVI: {m}'.format(m=ndvi_index.mean()))
-				st.write('Median NDVI: {m}'.format(m=np.median(ndvi_index)))
-				st.write('Min NDVI: {m}'.format(m=ndvi_index.min()))
-
-			with col6:
-
-				bsi_index = ((band12.astype(float)+band04.astype(float))-(band08.astype(float)+band02.astype(float)))/((band12.astype(float)+band04.astype(float))+(band08.astype(float)+band02.astype(float)))
-				fig_index2, ax = plt.subplots()
-				ax.imshow(bsi_index, cmap= "YlOrRd")
-				st.pyplot(fig_index2)
-
-				st.write('\nMax BSI: {m}'.format(m=bsi_index.max()))
-				st.write('Mean BSI: {m}'.format(m=bsi_index.mean()))
-				st.write('Median BSI: {m}'.format(m=np.median(bsi_index)))
-				st.write('Min BSI: {m}'.format(m=bsi_index.min()))
+			st.write('\nMax BSI: {m}'.format(m=bsi_index.max()))
+			st.write('Mean BSI: {m}'.format(m=bsi_index.mean()))
+			st.write('Median BSI: {m}'.format(m=np.median(bsi_index)))
+			st.write('Min BSI: {m}'.format(m=bsi_index.min()))
 				
-
-
-		with st.expander('Detección de cambios NDVI y BSI'):
-
-			option_index_suelo = st.radio('Seleccione indice', ['NDVI','BSI'])
-
-			if option_index_suelo =='NDVI':
-
-				fig_ndvi = px.imshow(ndvi_index, title='NDVI', labels=dict(x="pixel x", y="pixel y", color="NDVI"))
-				st.write(fig_ndvi)
-
-			if option_index_suelo =='BSI':
-				fig_bsi = px.imshow(bsi_index,title='BSI', labels=dict(x="pixel x", y="pixel y", color="BSI"))
-				st.write(fig_bsi)
 	except:
 		st.sidebar.error("Zona de muestreo no explorada")
 		
