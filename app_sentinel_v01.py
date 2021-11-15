@@ -875,7 +875,7 @@ if option =='🧪 Evaluación de la calidad el agua':
 			TOC = 6.41 -(85.29*dato_b02)+(2.05*dato_b03)-(29.96*dato_b04)
 
 			year_2018 = [2018,2018,2018,2018]
-			l_indice = ['NH3','BOD','COD','TOC']
+			l_indice = ['NH3','DBO','COD','COT']
 			data_2018 = [NH3_N,BOD,COD,TOC]
 
 			df2018={'Año':year_2018,
