@@ -495,28 +495,33 @@ if option == '⛰ Evaluación de cobertura vegetal':
 		band06 = clipped_img[8]
 
 		with st.expander('Análisis de Índice de vegetación de diferencia normalizada (NDVI) e Índice de suelo desnudo (BSI)'):
-
-			ndvi_index = (band08.astype(float)-band04.astype(float) )/(band08.astype(float)+band04.astype(float))
 			
-			fig_ndvi = px.imshow(ndvi_index,title='Índice de vegetación de diferencia normalizada', labels=dict(x="pixel x", y="pixel y", color="NDVI"))
-			fig_ndvi.update_layout(margin=dict( l=0, r=10, b=10, t=20,pad=1),coloraxis_colorbar=dict( title="BSI", len=0.8 , thickness=5))
-			st.plotly_chart(fig_ndvi,use_container_width=True)
+			col1,col2 = st.columns(2)
+			with col1:
 			
-			st.write('\nMax NDVI: {m}'.format(m=ndvi_index.max()))
-			st.write('Mean NDVI: {m}'.format(m=ndvi_index.mean()))
-			st.write('Median NDVI: {m}'.format(m=np.median(ndvi_index)))
-			st.write('Min NDVI: {m}'.format(m=ndvi_index.min()))
+				ndvi_index = (band08.astype(float)-band04.astype(float) )/(band08.astype(float)+band04.astype(float))
 
-			bsi_index = ((band12.astype(float)+band04.astype(float))-(band08.astype(float)+band02.astype(float)))/((band12.astype(float)+band04.astype(float))+(band08.astype(float)+band02.astype(float)))
+				fig_ndvi = px.imshow(ndvi_index,title='Índice de vegetación de diferencia normalizada', labels=dict(x="pixel x", y="pixel y", color="NDVI"))
+				fig_ndvi.update_layout(margin=dict( l=0, r=10, b=10, t=20,pad=1),coloraxis_colorbar=dict( title="BSI", len=0.8 , thickness=5))
+				st.plotly_chart(fig_ndvi,use_container_width=True)
+
+				st.write('\nMax NDVI: {m}'.format(m=ndvi_index.max()))
+				st.write('Mean NDVI: {m}'.format(m=ndvi_index.mean()))
+				st.write('Median NDVI: {m}'.format(m=np.median(ndvi_index)))
+				st.write('Min NDVI: {m}'.format(m=ndvi_index.min()))
 			
-			fig_bsi = px.imshow(bsi_index,title='Índice de suelo desnudo', labels=dict(x="pixel x", y="pixel y", color="BSI"))
-			fig_bsi.update_layout(margin=dict( l=0, r=10, b=10, t=20,pad=1),coloraxis_colorbar=dict( title="BSI", len=0.8 , thickness=5))
-			st.plotly_chart(fig_bsi,use_container_width=True)
+			with col2:
+				
+				bsi_index = ((band12.astype(float)+band04.astype(float))-(band08.astype(float)+band02.astype(float)))/((band12.astype(float)+band04.astype(float))+(band08.astype(float)+band02.astype(float)))
 
-			st.write('\nMax BSI: {m}'.format(m=bsi_index.max()))
-			st.write('Mean BSI: {m}'.format(m=bsi_index.mean()))
-			st.write('Median BSI: {m}'.format(m=np.median(bsi_index)))
-			st.write('Min BSI: {m}'.format(m=bsi_index.min()))
+				fig_bsi = px.imshow(bsi_index,title='Índice de suelo desnudo', labels=dict(x="pixel x", y="pixel y", color="BSI"))
+				fig_bsi.update_layout(margin=dict( l=0, r=10, b=10, t=20,pad=1),coloraxis_colorbar=dict( title="BSI", len=0.8 , thickness=5))
+				st.plotly_chart(fig_bsi,use_container_width=True)
+
+				st.write('\nMax BSI: {m}'.format(m=bsi_index.max()))
+				st.write('Mean BSI: {m}'.format(m=bsi_index.mean()))
+				st.write('Median BSI: {m}'.format(m=np.median(bsi_index)))
+				st.write('Min BSI: {m}'.format(m=bsi_index.min()))
 				
 	except:
 		st.sidebar.error("Zona de muestreo no explorada")
