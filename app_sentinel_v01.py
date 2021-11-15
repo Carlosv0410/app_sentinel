@@ -719,30 +719,30 @@ if option =='🧪 Evaluación de la calidad el agua':
 			with colb:
 				fig_index_agua2, ax = plt.subplots()
 				ax.imshow(COD_map, cmap="RdYlGn")
-				ax.set_title('COD')
+				ax.set_title('DQO')
 				st.pyplot(fig_index_agua2)
-				st.write('\nMax COD: {m}'.format(m=round(COD_map.max(),2)))
-				st.write('Mean COD: {m}'.format(m=round(COD_map.mean(),2)))
-				st.write('Median COD: {m}'.format(m=round(np.median(COD_map),2)))
-				st.write('Min COD: {m}'.format(m=round(COD_map.min(),2)))
+				st.write('\nMax DQO: {m}'.format(m=round(COD_map.max(),2)))
+				st.write('Mean DQO: {m}'.format(m=round(COD_map.mean(),2)))
+				st.write('Median DQO: {m}'.format(m=round(np.median(COD_map),2)))
+				st.write('Min DQO: {m}'.format(m=round(COD_map.min(),2)))
 			with colc:
 				fig_index_agua3, ax = plt.subplots()
 				ax.imshow(BOD_map, cmap="RdYlGn")
-				ax.set_title('BOD')
+				ax.set_title('DBO')
 				st.pyplot(fig_index_agua3)
-				st.write('\nMax BOD: {m}'.format(m=round(BOD_map.max(),2)))
-				st.write('Mean BOD: {m}'.format(m=round(BOD_map.mean(),2)))
-				st.write('Median BOD: {m}'.format(m=round(np.median(BOD_map),2)))
-				st.write('Min BOD: {m}'.format(m=round(BOD_map.min(),2)))
+				st.write('\nMax DBO: {m}'.format(m=round(BOD_map.max(),2)))
+				st.write('Mean DBO: {m}'.format(m=round(BOD_map.mean(),2)))
+				st.write('Median DBO: {m}'.format(m=round(np.median(BOD_map),2)))
+				st.write('Min DBO: {m}'.format(m=round(BOD_map.min(),2)))
 			with cold:
 				fig_index_agua4, ax = plt.subplots()
 				ax.imshow(TOC_map, cmap="RdYlGn")
-				ax.set_title('TOC')
+				ax.set_title('COT')
 				st.pyplot(fig_index_agua4)
-				st.write('\nMax TOC: {m}'.format(m=round(TOC_map.max(),2)))
-				st.write('Mean TOC: {m}'.format(m=round(TOC_map.mean(),2)))
-				st.write('Median TOC: {m}'.format(m=round(np.median(TOC_map),2)))
-				st.write('Min TOC: {m}'.format(m=round(TOC_map.min(),2)))
+				st.write('\nMax COT: {m}'.format(m=round(TOC_map.max(),2)))
+				st.write('Mean COT: {m}'.format(m=round(TOC_map.mean(),2)))
+				st.write('Median COT: {m}'.format(m=round(np.median(TOC_map),2)))
+				st.write('Min COT: {m}'.format(m=round(TOC_map.min(),2)))
 		except:
 			st.sidebar.error("Zona de muestreo no explorada")
 
@@ -750,23 +750,23 @@ if option =='🧪 Evaluación de la calidad el agua':
 		
 		try:
 
-			indice_plot =st.selectbox('Seleccione el indice a analizar',['NH3','COD','BOD','TOC'])
+			indice_plot =st.selectbox('Seleccione el indice a analizar',['NH3','DQO','DBO','COT'])
 
 			if indice_plot == 'NH3':
 
 				fig = px.imshow(NH3_N_map, title='NH3', labels=dict(x="pixel x", y="pixel y", color='NH3'))
 				st.write(fig)
-			elif indice_plot == 'COD':
+			elif indice_plot == 'DQO':
 
-				fig = px.imshow(COD_map, title='COD', labels=dict(x="pixel x", y="pixel y", color='COD'))
+				fig = px.imshow(COD_map, title='DQO', labels=dict(x="pixel x", y="pixel y", color='DQO'))
 				st.write(fig)
-			elif indice_plot == 'BOD':
+			elif indice_plot == 'DBO':
 
-				fig = px.imshow(BOD_map, title='BOD', labels=dict(x="pixel x", y="pixel y", color='BOD'))
+				fig = px.imshow(BOD_map, title='DBO', labels=dict(x="pixel x", y="pixel y", color='DBO'))
 				st.write(fig)
-			elif indice_plot == 'TOC':
+			elif indice_plot == 'COT':
 
-				fig = px.imshow(TOC_map, title='TOC', labels=dict(x="pixel x", y="pixel y", color='TOC'))
+				fig = px.imshow(TOC_map, title='COT', labels=dict(x="pixel x", y="pixel y", color='COT'))
 				st.write(fig)
 		except:
 			st.error("Zona de muestreo no explorada")
@@ -826,8 +826,8 @@ if option =='🧪 Evaluación de la calidad el agua':
 			TOC = 6.41 -(85.29*dato_b02)+(2.05*dato_b03)-(29.96*dato_b04)
 
 			year_2017 = [2017,2017,2017,2017]
-			l_indice = ['NH3','BOD','COD','TOC']
-			data_2017 = [NH3_N,BOD,COD,TOC]
+			l_indice = ['NH3','DBO','COD','COT']
+			data_2017 = [NH3_N,BOD,DQO,TOC]
 
 			df2017={'Año':year_2017,
 					'Indice':l_indice,
