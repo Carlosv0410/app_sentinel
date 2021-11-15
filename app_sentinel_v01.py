@@ -677,8 +677,7 @@ if option =='🧪 Evaluación de la calidad el agua':
 	with st.expander('Análisis anual de Índices'):
 		
 		try:
-			zona_opcion_agua = st.selectbox('🌐 Seleccione una zona',['Zona 1 red','Zona 2 yellow','Zona 3 cian','Anzu Norte', 'Berta 1', 'Confluencia', 'Cristobal','Genial', 'Vista Anzu'])
-			year_option_agua = st.slider('Elija un año', 2017,2021,2017)
+			zona_opcion_agua = st.selectbox('🌐 Seleccione una zona',['Zona 1 red','Zona 2 yellow','Zona 3 cian','River','Anzu Norte', 'Berta 1', 'Confluencia', 'Cristobal','Genial', 'Vista Anzu'])
 			year_option_agua = st.slider('Elija un año', 2017,2021,2017)
 			s2_bands = evaluacion_suelo.bandas(zona_opcion_agua, year_option_agua)
 
@@ -777,7 +776,7 @@ if option =='🧪 Evaluación de la calidad el agua':
 
 		columna1, columna2 = st.columns(2)
 		with columna1:
-			select_zona_agua = st.selectbox('🌐 Seleccione',['Zona 1 red','Zona 2 yellow','Zona 3 cian','River','Anzu Norte', 'Berta 1', 'Confluencia', 'Cristobal','Genial', 'Vista Anzu'])
+			select_zona_agua = st.selectbox('🌐 Seleccione',['Zona 1 red','Zona 2 yellow','Zona 3 cian','Anzu Norte', 'Berta 1', 'Confluencia', 'Cristobal','Genial', 'Vista Anzu'])
 
 			year_zona = st.slider('Seleccione el año',2017,2021,2017,step=1)
 
@@ -789,54 +788,6 @@ if option =='🧪 Evaluación de la calidad el agua':
 	with st.expander('Análisis en los puntos de muestreo'):
 		
 		try:
-			
-			cola, colb ,colc, cold=st.columns(4)
-				
-			with cola:
-
-				fig_index_agua1, ax = plt.subplots()
-
-				ax.imshow(NH3_N_map, cmap="RdYlGn" )
-				ax.set_title('NH3')
-				st.pyplot(fig_index_agua1)
-			with colb:
-				fig_index_agua2, ax = plt.subplots()
-				ax.imshow(COD_map, cmap="RdYlGn")
-				ax.set_title('COD')
-				st.pyplot(fig_index_agua2)
-			with colc:
-				fig_index_agua3, ax = plt.subplots()
-				ax.imshow(BOD_map, cmap="RdYlGn")
-				ax.set_title('BOD')
-				st.pyplot(fig_index_agua3)
-			with cold:
-				fig_index_agua4, ax = plt.subplots()
-				ax.imshow(TOC_map, cmap="RdYlGn")
-				ax.set_title('TOC')
-				st.pyplot(fig_index_agua4)
-
-			option_index_agua = st.radio('Seleccione indice', ['NH3','COD','BOD','TOC'])
-
-			if option_index_agua =='NH3':
-
-				fig_agua = px.imshow(NH3_N_map, title='NH3',labels=dict(x="pixel x", y="pixel y", color='NDSI'))
-				st.write(fig_agua)
-
-			if option_index_agua =='COD':
-				fig_agua = px.imshow(COD_map,title='COD',labels=dict(x="pixel x", y="pixel y", color='NDSI'))
-				st.write(fig_agua)
-
-			if option_index_agua =='BOD':
-
-				fig_agua = px.imshow(BOD_map, title='BOD',labels=dict(x="pixel x", y="pixel y", color='NDSI'))
-				st.write(fig_agua)
-
-			if option_index_agua =='TOC':
-				fig_agua = px.imshow(TOC_map,title='TOC',labels=dict(x="pixel x", y="pixel y", color='NDSI'))
-				st.write(fig_agua)
-			
-			
-			
 			s2_bands2017 = evaluacion_suelo.bandas(select_zona_agua, 2017)
 
 			arrs = []
