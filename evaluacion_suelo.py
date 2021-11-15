@@ -1,5 +1,6 @@
 import streamlit as st 
 
+@st.cache
 def bandas(zona, year):
 
 	if zona== 'Zona 1 red':
