@@ -579,7 +579,7 @@ if option == '⛰ Evaluación de cobertura vegetal':
 		indice_dbsi= band11.astype(float)-(band03.astype(float)/band11.astype(float))+(band03.astype(float)-((band08.astype(float)-band04.astype(float))/ (band08.astype(float)+band04.astype(float))))
 		NDBI  = (band11.astype(float)-band08.astype(float))/(band11.astype(float)+band08.astype(float))
 		NDVI  = (band08.astype(float)-band04.astype(float))/(band08.astype(float)+band04.astype(float))
-		MNDWI = (band3.astype(float)-band011.astype(float))/(band3.astype(float)+band011.astype(float))		
+		MNDWI = (band03.astype(float)-band011.astype(float))/(band03.astype(float)+band011.astype(float))		
 		indice_ibi = NDBI - (NDVI + MNDWI/2)/NDBI + (NDVI + MNDWI/2)
 		indice_gci = (band09.astype(float)/band03.astype(float))-1
 		indice_ci = (band04.astype(float)-band03.astype(float) )/ (band04.astype(float)+band03.astype(float))
