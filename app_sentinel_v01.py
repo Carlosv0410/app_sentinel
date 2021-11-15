@@ -826,8 +826,8 @@ if option =='🧪 Evaluación de la calidad el agua':
 			TOC = 6.41 -(85.29*dato_b02)+(2.05*dato_b03)-(29.96*dato_b04)
 
 			year_2017 = [2017,2017,2017,2017]
-			l_indice = ['NH3','DBO','COD','COT']
-			data_2017 = [NH3_N,BOD,DQO,TOC]
+			l_indice = ['NH3','DBO','DQO','COT']
+			data_2017 = [NH3_N,BOD,COD,TOC]
 
 			df2017={'Año':year_2017,
 					'Indice':l_indice,
@@ -875,7 +875,7 @@ if option =='🧪 Evaluación de la calidad el agua':
 			TOC = 6.41 -(85.29*dato_b02)+(2.05*dato_b03)-(29.96*dato_b04)
 
 			year_2018 = [2018,2018,2018,2018]
-			l_indice = ['NH3','DBO','COD','COT']
+			l_indice = ['NH3','DBO','DQO','COT']
 			data_2018 = [NH3_N,BOD,COD,TOC]
 
 			df2018={'Año':year_2018,
@@ -924,7 +924,7 @@ if option =='🧪 Evaluación de la calidad el agua':
 			TOC = 6.41 -(85.29*dato_b02)+(2.05*dato_b03)-(29.96*dato_b04)
 
 			year_2019 = [2019,2019,2019,2019]
-			l_indice = ['NH3','DBO','COD','COT']
+			l_indice = ['NH3','DBO','DQO','COT']
 			data_2019 = [NH3_N,BOD,COD,TOC]
 
 			df2019={'Año':year_2019,
@@ -973,7 +973,7 @@ if option =='🧪 Evaluación de la calidad el agua':
 			TOC = 6.41 -(85.29*dato_b02)+(2.05*dato_b03)-(29.96*dato_b04)
 
 			year_2020 = [2020,2020,2020,2020]
-			l_indice = ['NH3','DBO','COD','COT']
+			l_indice = ['NH3','DBO','DQO','COT']
 			data_2020 = [NH3_N,BOD,COD,TOC]
 
 			df2020={'Año':year_2020,
@@ -1022,7 +1022,7 @@ if option =='🧪 Evaluación de la calidad el agua':
 			TOC = 6.41 -(85.29*dato_b02)+(2.05*dato_b03)-(29.96*dato_b04)
 
 			year_2021 = [2021,2021,2021,2021]
-			l_indice = ['NH3','DBO','COD','COT']
+			l_indice = ['NH3','DBO','DQO','COT']
 			data_2021 = [NH3_N,BOD,COD,TOC]
 
 			df2021={'Año':year_2021,
