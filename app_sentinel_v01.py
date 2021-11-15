@@ -613,7 +613,7 @@ if option == '⛰ Evaluación de cobertura vegetal':
 			st.pyplot(fig_indice_dbsi)
 			
 			fig_indice_ibi=plot_indices(indice_ibi, 'Índice IBI')
-			st.pyplot(fig_indice_ibi))
+			st.pyplot(fig_indice_ibi)
 		with colc:
 			
 			fig_indice_gci=plot_indices(indice_gci, 'Índice GCI')
@@ -623,7 +623,7 @@ if option == '⛰ Evaluación de cobertura vegetal':
 			st.pyplot(fig_indice_ci)
 			
 			fig_indice_savi=plot_indices(indice_savi, 'Índice SAVI')
-			st.pyplot(fig_indice_savi))
+			st.pyplot(fig_indice_savi)
 			
 			
 		principales_indices2 = st.selectbox('Seleccione el indice',['NDVI','NDWI','GNDVI','TGI','EVI2','DBSI','IBI','CI','SAVI'])
