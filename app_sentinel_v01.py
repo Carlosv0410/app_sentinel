@@ -509,7 +509,7 @@ if option == '⛰ Evaluación de cobertura vegetal':
 
 			bsi_index = ((band12.astype(float)+band04.astype(float))-(band08.astype(float)+band02.astype(float)))/((band12.astype(float)+band04.astype(float))+(band08.astype(float)+band02.astype(float)))
 			
-			fig_bsi = px.imshow(bsi_index,title='Índice de suelo desnudo', labels=dict(x="pixel x", y="pixel y", color="BSI")
+			fig_bsi = px.imshow(bsi_index,title='Índice de suelo desnudo', labels=dict(x="pixel x", y="pixel y", color="BSI"))
 			fig_bsi.update_layout(margin=dict( l=0, r=10, b=10, t=20,pad=1),coloraxis_colorbar=dict( title="BSI", len=0.8 , thickness=5))
 			st.plotly_chart(fig_bsi,use_container_width=True)
 
