@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 from PIL import Image
 
+@st.cache
 def  seleccion_zona(zona, year):
 	if zona =='Zona 1 red':
 
