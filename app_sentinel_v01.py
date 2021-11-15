@@ -574,61 +574,58 @@ if option == '⛰ Evaluación de cobertura vegetal':
 	with st.expander('Indices espectrales para Sentinel'):
 		indice_ndvi = (band08.astype(float)-band04.astype(float) )/ (band08.astype(float)+band04.astype(float))
 		indice_ndwi =  (band08.astype(float)-(band05.astype(float)*1))
-		indice_gndvi = (band08.astype(float)-band03.astype(float))/(band08.astype(float)+band03.astype(float))
 		indice_tgi = band03.astype(float)-0.39*band04.astype(float)-0.61*band02.astype(float)
 		indice_evi2 = (2.5*(band08.astype(float)-band04.astype(float))/ (band08.astype(float)+6*(band04.astype(float))+2.4*(band02.astype(float))+1))
-		indice_dbsi= band11.astype(float)-(band03.astype(float)/band11.astype(float))+(band03.astype(float)-((band08.astype(float)-band04.astype(float))/ (band08.astype(float)+band04.astype(float))))									      
-		indice_ibi = (band11.astype(float)-band08.astype(float)/band11.astype(float)+band08.astype(float))-(((band08.astype(float)-band04.astype(float) )/ (band08.astype(float)+band04.astype(float)) +(band11.astype(float)-band08.astype(float)/band11.astype(float)+band08.astype(float))/2)/ (band11.astype(float)-band08.astype(float)/band11.astype(float)+band08.astype(float)))+((band08.astype(float)-band04.astype(float) )/ (band08.astype(float)+band04.astype(float))+((band11.astype(float)-band08.astype(float)/band11.astype(float)+band08.astype(float))/2))
+		indice_dbsi= band11.astype(float)-(band03.astype(float)/band11.astype(float))+(band03.astype(float)-((band08.astype(float)-band04.astype(float))/ (band08.astype(float)+band04.astype(float))))
+		NDBI  = (band11.astype(float)-band08.astype(float))/(band11.astype(float)+band08.astype(float))
+		NDVI  = (band08.astype(float)-band04.astype(float))/(band08.astype(float)+band04.astype(float))
+		MNDWI = (band3.astype(float)-band011.astype(float))/(band3.astype(float)+band011.astype(float))		
+		indice_ibi = NDBI - (NDVI + MNDWI/2)/NDBI + (NDVI + MNDWI/2)
+		indice_gci = (band09.astype(float)/band03.astype(float))-1
 		indice_ci = (band04.astype(float)-band03.astype(float) )/ (band04.astype(float)+band03.astype(float))
 		indice_savi = ((band08.astype(float)-band05.astype(float))/(band08.astype(float)+band05.astype(float)+0.5))*(1+0.5)
-										 
+		
+		@st.cache
+		def plot_indices(ingreso_indice, name):
+			fig,ax = plt.subplots()
+			ax.imshow(ingreso_indice, cmap="RdYlGn")
+			ax.set_title(name,fontweight ="bold")
+			return fig
+			
+			
 		cola,colb,colc = st.columns(3)
 		
 		with cola:
-			fig_indice_ndvi, ax = plt.subplots()
-			ax.imshow(indice_ndvi, cmap="RdYlGn")
-			ax.set_title('Índice NDVI',fontweight ="bold")
+			fig_indice_ndvi=plot_indices(indice_ndwi, 'Índice NDVI')
 			st.pyplot(fig_indice_ndvi)
-				
-			fig_indice_ndwi, ax = plt.subplots()
-			ax.imshow(indice_ndwi, cmap="RdYlGn")
-			ax.set_title('Índice NDWI',fontweight ="bold")
+			
+			fig_indice_ndwi=plot_indices(indice_ndwi, 'Índice NDWI')
 			st.pyplot(fig_indice_ndwi)
-				
-			fig_indice_gndvi, ax = plt.subplots()
-			ax.imshow(indice_gndvi, cmap="RdYlGn")
-			ax.set_title('Índice GNDVI',fontweight ="bold")
-			st.pyplot(fig_indice_gndvi)
-		with colb:				
-			fig_indice_tgi, ax = plt.subplots()
-			ax.imshow(indice_tgi, cmap="RdYlGn")
-			ax.set_title('Índice TGI',fontweight ="bold")
+			
+			fig_indice_tgi=plot_indices(indice_tgi, 'Índice TGI')
 			st.pyplot(fig_indice_tgi)
 				
-			fig_indice_evi2 , ax = plt.subplots()
-			ax.imshow(indice_evi2  , cmap="RdYlGn")
-			ax.set_title('Índice EVI2',fontweight ="bold")
-			st.pyplot(fig_indice_evi2 )
-				
-			fig_indice_dbsi, ax = plt.subplots()
-			ax.imshow(indice_dbsi, cmap="RdYlGn")
-			ax.set_title('Índice DBSI',fontweight ="bold")
+		with colb:				
+			fig_indice_evi2=plot_indices(indice_evi2, 'Índice EVI2')
+			st.pyplot(fig_indice_evi2)
+			
+			fig_indice_dbsi=plot_indices(indice_dbsi, 'Índice DBSI')
 			st.pyplot(fig_indice_dbsi)
+			
+			fig_indice_ibi=plot_indices(indice_ibi, 'Índice IBI')
+			st.pyplot(fig_indice_ibi))
 		with colc:
-			fig_indice_ibi, ax = plt.subplots()
-			ax.imshow(indice_ibi, cmap="RdYlGn")
-			ax.set_title('Índice IBI',fontweight ="bold")
-			st.pyplot(fig_indice_ibi)
 			
-			fig_indice_ci, ax = plt.subplots()
-			ax.imshow(indice_ci, cmap="RdYlGn")
-			ax.set_title('Índice CI',fontweight ="bold")
-			st.pyplot(fig_indice_ci)									   
+			fig_indice_gci=plot_indices(indice_gci, 'Índice GCI')
+			st.pyplot(fig_indice_gci)
 			
-			fig_indice_savi, ax = plt.subplots()
-			ax.imshow(indice_savi, cmap="RdYlGn")
-			ax.set_title('Índice SAVI',fontweight ="bold")
-			st.pyplot(fig_indice_savi)			
+			fig_indice_ci=plot_indices(indice_ci, 'Índice CI')
+			st.pyplot(fig_indice_ci)
+			
+			fig_indice_savi=plot_indices(indice_savi, 'Índice SAVI')
+			st.pyplot(fig_indice_savi))
+			
+			
 		principales_indices2 = st.selectbox('Seleccione el indice',['NDVI','NDWI','GNDVI','TGI','EVI2','DBSI','IBI','CI','SAVI'])
 		
 		if principales_indices2 =='NDVI':
