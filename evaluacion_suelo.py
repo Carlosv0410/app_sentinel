@@ -168,40 +168,40 @@ def bandas(zona, year):
 	if zona== 'River':
 
 		if year ==2017:
-			s2_bands = ["Evaluacion de suelo/River/bandas_2017/S2_B2_2017.tif",
-	        		    "Evaluacion de suelo/River/bandas_2017/S2_B3_2017.tif",
-		            	"Evaluacion de suelo/River/bandas_2017/S2_B4_2017.tif",
-		            	"Evaluacion de suelo/River/bandas_2017/S2_B8_2017.tif",
-		            	"Evaluacion de suelo/River/bandas_2017/S2_B11_2017.tif",
-		            	"Evaluacion de suelo/River/bandas_2017/S2_B12_2017.tif"]
+			s2_bands = ["Evaluacion_suelo/River/bandas_2017/S2_B2_2017.tif",
+	        		    "Evaluacion_suelo/River/bandas_2017/S2_B3_2017.tif",
+		            	"Evaluacion_suelo/River/bandas_2017/S2_B4_2017.tif",
+		            	"Evaluacion_suelo/River/bandas_2017/S2_B8_2017.tif",
+		            	"Evaluacion_suelo/River/bandas_2017/S2_B11_2017.tif",
+		            	"Evaluacion_suelo/River/bandas_2017/S2_B12_2017.tif"]
 		if year ==2018:
-			s2_bands = ["Evaluacion de suelo/River/bandas_2018/S2_B2_2018.tif",
-	        		    "Evaluacion de suelo/River/bandas_2018/S2_B3_2018.tif",
-		            	"Evaluacion de suelo/River/bandas_2018/S2_B4_2018.tif",
-		            	"Evaluacion de suelo/River/bandas_2018/S2_B8_2018.tif",
-		            	"Evaluacion de suelo/River/bandas_2018/S2_B11_2018.tif",
-		            	"Evaluacion de suelo/River/bandas_2018/S2_B12_2018.tif"]
+			s2_bands = ["Evaluacion_suelo/River/bandas_2018/S2_B2_2018.tif",
+	        		    "Evaluacion_suelo/River/bandas_2018/S2_B3_2018.tif",
+		            	"Evaluacion_suelo/River/bandas_2018/S2_B4_2018.tif",
+		            	"Evaluacion_suelo/River/bandas_2018/S2_B8_2018.tif",
+		            	"Evaluacion_suelo/River/bandas_2018/S2_B11_2018.tif",
+		            	"Evaluacion_suelo/River/bandas_2018/S2_B12_2018.tif"]
 		if year ==2019:
-			s2_bands = ["Evaluacion de suelo/River/bandas_2019/S2_B2_2019.tif",
-	        		    "Evaluacion de suelo/River/bandas_2019/S2_B3_2019.tif",
-		            	"Evaluacion de suelo/River/bandas_2019/S2_B4_2019.tif",
-		            	"Evaluacion de suelo/River/bandas_2019/S2_B8_2019.tif",
-		            	"Evaluacion de suelo/River/bandas_2019/S2_B11_2019.tif",
-		            	"Evaluacion de suelo/River/bandas_2019/S2_B12_2019.tif"]
+			s2_bands = ["Evaluacion_suelo/River/bandas_2019/S2_B2_2019.tif",
+	        		    "Evaluacion_suelo/River/bandas_2019/S2_B3_2019.tif",
+		            	"Evaluacion_suelo/River/bandas_2019/S2_B4_2019.tif",
+		            	"Evaluacion_suelo/River/bandas_2019/S2_B8_2019.tif",
+		            	"Evaluacion_suelo/River/bandas_2019/S2_B11_2019.tif",
+		            	"Evaluacion_suelo/River/bandas_2019/S2_B12_2019.tif"]
 		if year ==2020:
-			s2_bands = ["Evaluacion de suelo/River/bandas_2020/S2_B2_2020.tif",
-	        		    "Evaluacion de suelo/River/bandas_2020/S2_B3_2020.tif",
-		            	"Evaluacion de suelo/River/bandas_2020/S2_B4_2020.tif",
-		            	"Evaluacion de suelo/River/bandas_2020/S2_B8_2020.tif",
-		            	"Evaluacion de suelo/River/bandas_2020/S2_B11_2020.tif",
-		            	"Evaluacion de suelo/River/bandas_2020/S2_B12_2020.tif"]
+			s2_bands = ["Evaluacion_suelo/River/bandas_2020/S2_B2_2020.tif",
+	        		    "Evaluacion_suelo/River/bandas_2020/S2_B3_2020.tif",
+		            	"Evaluacion_suelo/River/bandas_2020/S2_B4_2020.tif",
+		            	"Evaluacion_suelo/River/bandas_2020/S2_B8_2020.tif",
+		            	"Evaluacion_suelo/River/bandas_2020/S2_B11_2020.tif",
+		            	"Evaluacion_suelo/River/bandas_2020/S2_B12_2020.tif"]
 		if year ==2021:
-			s2_bands = ["Evaluacion de suelo/River/bandas_2021/S2_B2_2021.tif",
-	        		    "Evaluacion de suelo/River/bandas_2021/S2_B3_2021.tif",
-		            	"Evaluacion de suelo/River/bandas_2021/S2_B4_2021.tif",
-		            	"Evaluacion de suelo/River/bandas_2021/S2_B8_2021.tif",
-		            	"Evaluacion de suelo/River/bandas_2021/S2_B11_2021.tif",
-		            	"Evaluacion de suelo/River/bandas_2021/S2_B12_2021.tif"]			
+			s2_bands = ["Evaluacion_suelo/River/bandas_2021/S2_B2_2021.tif",
+	        		    "Evaluacion_suelo/River/bandas_2021/S2_B3_2021.tif",
+		            	"Evaluacion_suelo/River/bandas_2021/S2_B4_2021.tif",
+		            	"Evaluacion_suelo/River/bandas_2021/S2_B8_2021.tif",
+		            	"Evaluacion_suelo/River/bandas_2021/S2_B11_2021.tif",
+		            	"Evaluacion_suelo/River/bandas_2021/S2_B12_2021.tif"]			
 	return s2_bands
 
 
