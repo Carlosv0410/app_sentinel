@@ -625,7 +625,7 @@ if option == '⛰ Evaluación de cobertura vegetal':
 			st.pyplot(fig_indice_savi)
 			
 			
-		principales_indices2 = st.selectbox('Seleccione el indice',['NDVI','NDWI','GNDVI','TGI','EVI2','DBSI','IBI','CI','SAVI'])
+		principales_indices2 = st.selectbox('Seleccione el indice',['NDVI','NDWI','GCI','TGI','EVI2','DBSI','IBI','CI','SAVI'])
 		
 		if principales_indices2 =='NDVI':
 			fig = px.imshow(indice_ndvi, title='NDVI', labels=dict(x="pixel x", y="pixel y", color='NDVI'))
@@ -635,10 +635,9 @@ if option == '⛰ Evaluación de cobertura vegetal':
 			fig = px.imshow(indice_ndwi,title='NDWI', labels=dict(x="pixel x", y="pixel y", color='NDWI'))
 			st.write(fig)
 			st.success('NDWI < = 0 Cuerpos hídricos 0 < NDWI < 0.1 suelo desnudo o cubiertas infraestructura ')
-		elif principales_indices2 =='GNDVI':
-			fig = px.imshow(indice_gndvi,title='GNDVI', labels=dict(x="pixel x", y="pixel y", color='GNDVI'))
+		elif principales_indices2 =='GCI':
+			fig = px.imshow(indice_gci,title='GCI', labels=dict(x="pixel x", y="pixel y", color='GCI'))
 			st.write(fig)
-			st.success(' NDVI < 0 suelo desnudo, infraestructura, cuerpos de agua 0 - 0.6 ')
 		elif principales_indices2 =='TGI':
 			fig = px.imshow(indice_tgi,title='TGI', labels=dict(x="pixel x", y="pixel y", color='TGI'))
 			st.write(fig)
@@ -678,7 +677,7 @@ if option =='🧪 Evaluación de la calidad el agua':
 	with st.expander('Análisis anual de Índices'):
 		
 		try:
-			zona_opcion_agua = st.selectbox('🌐 Seleccione una zona',['Zona 1 red','Zona 2 yellow','Zona 3 cian','Anzu Norte', 'Berta 1', 'Confluencia', 'Cristobal','Genial', 'Vista Anzu'])
+			zona_opcion_agua = st.selectbox('🌐 Seleccione',['Zona 1 red','Zona 2 yellow','Zona 3 cian','River','Anzu Norte', 'Berta 1', 'Confluencia', 'Cristobal','Genial', 'Vista Anzu'])
 			year_option_agua = st.slider('Elija un año', 2017,2021,2017)
 			s2_bands = evaluacion_suelo.bandas(zona_opcion_agua, year_option_agua)
 
@@ -777,7 +776,7 @@ if option =='🧪 Evaluación de la calidad el agua':
 
 		columna1, columna2 = st.columns(2)
 		with columna1:
-			select_zona_agua = st.selectbox('🌐 Seleccione',['Zona 1 red','Zona 2 yellow','Zona 3 cian','Anzu Norte', 'Berta 1', 'Confluencia', 'Cristobal','Genial', 'Vista Anzu'])
+			select_zona_agua = st.selectbox('🌐 Seleccione',['Zona 1 red','Zona 2 yellow','Zona 3 cian','River','Anzu Norte', 'Berta 1', 'Confluencia', 'Cristobal','Genial', 'Vista Anzu'])
 
 			year_zona = st.slider('Seleccione el año',2017,2021,2017,step=1)
 
