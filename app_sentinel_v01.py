@@ -1,4 +1,5 @@
 # APP SENTINEL HUB CALCULO DE INDICES
+# Elaborado por Ing. Carlos Carrillo Villavicencio Master Degree TIC
 #------------------------------------
 # Librerias
 import streamlit as st 
@@ -46,7 +47,7 @@ if config.sh_client_id == '' or  config.sh_client_secret == '':
 
 #Inicio de la Aplicación
 #-----------------------
-st.title('Sistema de Monitoreo ANZU')
+st.title('Sistema para monitoreo de bioindicadores ANZU')
 
 video_file = open('monitoring1.mp4', 'rb')
 video_bytes = video_file.read()
@@ -54,15 +55,15 @@ st.sidebar.video(video_bytes ,format="video/mp4", start_time=0)
 #st.sidebar.write('Sentinel')
 
 st.sidebar.title('Menu')
-option = st.sidebar.radio('Seleccione una opcion', ['💧 Concesiones', '🛰 Visualización satelital', '⛰ Evaluación de cobertura vegetal', '🧪 Evaluación de la calidad el agua'])
+option = st.sidebar.radio('Seleccione una opcion', ['💧 MAPE', '🛰 Visualización satelital', '⛰ Evaluación de cobertura vegetal', '🧪 Evaluación de la calidad el agua'])
 
-if option == '💧 Concesiones':
+if option == '💧 MAPE':
 
-	st.info('Concesiones Mineras')
+	st.info('MAPE - Amazonia ecuatoriana')
 
 	columna1, columna2 = st.columns(2)
 	with columna1:
-		select_concesion = st.selectbox('🌐 Seleccione',['⚒ Concesiones','Zona 1 red','Zona 2 yellow','Zona 3 cian','Anzu Norte', 'Berta 1', 'Confluencia', 'Cristobal','Genial', 'Vista Anzu'])
+		select_concesion = st.selectbox('🌐 Seleccione',['⚒ Concesiones','Zona de monitoreo 1','Zona de monitoreo 2','Zona de monitoreo 3','Anzu Norte', 'Berta 1', 'Confluencia', 'Cristobal','Genial', 'Vista Anzu'])
 
 	with columna2:
 		if select_concesion == '⚒ Concesiones':
@@ -470,7 +471,7 @@ if option == '🛰 Visualización satelital':
 if option == '⛰ Evaluación de cobertura vegetal':
 	
 	try:
-		zona_opcion = st.selectbox('🌐 Seleccione una zona',['Zona 1 red','Zona 2 yellow','Zona 3 cian','Anzu Norte', 'Berta 1', 'Confluencia', 'Cristobal','Genial', 'Vista Anzu'])
+		zona_opcion = st.selectbox('🌐 Seleccione una zona',['Zona de monitoreo 1','Zona de monitoreo 2','Zona de monitoreo 3','Anzu Norte', 'Berta 1', 'Confluencia', 'Cristobal','Genial', 'Vista Anzu'])
 		year_option = st.slider('Elija un año', 2017,2021,2017)
 
 		s2_bands = evaluacion_suelo.bandas(zona_opcion, year_option)
@@ -494,7 +495,7 @@ if option == '⛰ Evaluación de cobertura vegetal':
 		band05 = clipped_img[7]
 		band06 = clipped_img[8]
 
-		with st.expander('Análisis de Índice de vegetación de diferencia normalizada (NDVI) e Índice de suelo desnudo (BSI)'):
+		with st.expander('Indices de vegetacion'):
 			
 			col1,col2 = st.columns(2)
 			with col1:
@@ -509,7 +510,7 @@ if option == '⛰ Evaluación de cobertura vegetal':
 				st.write('Mean NDVI: {m}'.format(m=ndvi_index.mean()))
 				st.write('Median NDVI: {m}'.format(m=np.median(ndvi_index)))
 				st.write('Min NDVI: {m}'.format(m=ndvi_index.min()))
-				st.success('El Índice de Vegetación de la Diferencia Normalizada (NDVI) es un indicador numérico que utiliza las bandas espectrales roja y cercana al infrarrojo. El NDVI está altamente asociado con el contenido de vegetación. ')
+				st.success('Es un indicador numérico que utiliza las bandas espectrales roja y cercana al infrarrojo. El NDVI está altamente asociado con el contenido de vegetación. ')
 
 			
 			with col2:
@@ -524,15 +525,9 @@ if option == '⛰ Evaluación de cobertura vegetal':
 				st.write('Mean BSI: {m}'.format(m=bsi_index.mean()))
 				st.write('Median BSI: {m}'.format(m=np.median(bsi_index)))
 				st.write('Min BSI: {m}'.format(m=bsi_index.min()))
-				st.success('El Índice de Suelo Desnudo (BSI) es un indicador numérico que combina bandas espectrales azules, rojas, infrarrojas cercanas e infrarrojas de onda corta para capturar las variaciones del suelo. Estas bandas espectrales se utilizan de manera normalizada.')
+				st.success('Es un indicador numérico que combina bandas espectrales azules, rojas, infrarrojas cercanas e infrarrojas de onda corta para capturar las variaciones del suelo. Estas bandas espectrales se utilizan de manera normalizada.')
 
-	except:
-		st.sidebar.error("Zona de muestreo no explorada")
-		
-	
-	try:
-		
-		with st.expander('Principales índices espectrales para Sentinel 2'):
+
 			
 			gndvi_index = (band08.astype(float)-band03.astype(float) )/ (band08.astype(float)+band03.astype(float))
 			ndmi_index = (band08.astype(float)-band11.astype(float))/(band08.astype(float)+band11.astype(float))
@@ -546,24 +541,24 @@ if option == '⛰ Evaluación de cobertura vegetal':
 				fig_gndvi_index = px.imshow(gndvi_index,title='Índice de Vegetación de la Diferencia Normalizada Verde', labels=dict(x="pixel x", y="pixel y", color="GNDVI"))
 				fig_gndvi_index.update_layout(margin=dict( l=0, r=10, b=10, t=30,pad=1),coloraxis_colorbar=dict( title="GNDVI", len=0.8 , thickness=5))
 				st.plotly_chart(fig_gndvi_index,use_container_width=True)
-				st.success('El Índice de Vegetación de la Diferencia Normalizada Verde (GNDVI) es una versión modificada del NDVI para que sea más sensible a la variación del contenido de clorofila en el cultivo.')
+				st.success('Es una versión modificada del NDVI para que sea más sensible a la variación del contenido de clorofila en el cultivo.')
 				
 				fig_gci_index = px.imshow(gci_index,title='Índice de Clorofila', labels=dict(x="pixel x", y="pixel y", color="GCI"))
 				fig_gci_index.update_layout(margin=dict( l=0, r=10, b=10, t=30,pad=1),coloraxis_colorbar=dict( title="GCI", len=0.8 , thickness=5))
 				st.plotly_chart(fig_gci_index,use_container_width=True)
-				st.success('En la teledetección, el Índice de Clorofila se utiliza para estimar el contenido de clorofila en las hojas de diversas especies de plantas. El contenido de clorofila refleja el estado fisiológico de la vegetación; disminuye en las plantas estresadas y, por lo tanto, puede utilizarse como medida de la salud de las plantas (EOS, 2019).')
+				st.success('Se utiliza para estimar el contenido de clorofila en las hojas de diversas especies de plantas. El contenido de clorofila refleja el estado fisiológico de la vegetación; disminuye en las plantas estresadas y, por lo tanto, puede utilizarse como medida de la salud de las plantas (EOS, 2019).')
 				
 			with colb:
 				
 				fig_ndmi_index = px.imshow(ndmi_index,title='Índice de Diferencia Normalizada de Humedad' , labels=dict(x="pixel x", y="pixel y", color="NDMI"))
 				fig_ndmi_index.update_layout(margin=dict( l=0, r=10, b=10, t=30,pad=1),coloraxis_colorbar=dict( title="NDMI", len=0.8 , thickness=5))
 				st.plotly_chart(fig_ndmi_index,use_container_width=True)
-				st.success('El Índice de Diferencia Normalizada de Humedad (NDMI) se utiliza para determinar el contenido de agua de la vegetación.')
+				st.success('Se utiliza para determinar el contenido de agua de la vegetación.')
 							
 				fig_ndwi_index = px.imshow(ndwi_index,title='Índice Diferencial de Agua Normalizado', labels=dict(x="pixel x", y="pixel y", color="NDWI"))
 				fig_ndwi_index.update_layout(margin=dict( l=0, r=10, b=10, t=30,pad=1),coloraxis_colorbar=dict( title="NDWI", len=0.8 , thickness=5))
 				st.plotly_chart(fig_ndwi_index,use_container_width=True)
-				st.success('El Índice Diferencial de Agua Normalizado (NDWI) se utiliza para el análisis de masas de agua. El índice utiliza bandas verdes y casi infrarrojas de imágenes de teledetección. El NDWI puede mejorar la información sobre el agua de manera eficiente en la mayoría de los casos. Es sensible a la acumulación de tierra y resulta en la sobreestimación de los cuerpos de agua.')
+				st.success('Se utiliza para el análisis de masas de agua. El índice utiliza bandas verdes y casi infrarrojas de imágenes de teledetección. El NDWI puede mejorar la información sobre el agua de manera eficiente en la mayoría de los casos. Es sensible a la acumulación de tierra y resulta en la sobreestimación de los cuerpos de agua.')
 				
 	
 	except:
@@ -571,7 +566,7 @@ if option == '⛰ Evaluación de cobertura vegetal':
 		
 
 		
-	with st.expander('Indices espectrales para Sentinel'):
+	with st.expander('Índices complementarios'):
 		indice_ndvi = (band08.astype(float)-band04.astype(float) )/ (band08.astype(float)+band04.astype(float))
 		indice_ndwi =  (band08.astype(float)-(band05.astype(float)*1))
 		indice_tgi = band03.astype(float)-0.39*band04.astype(float)-0.61*band02.astype(float)
@@ -585,44 +580,44 @@ if option == '⛰ Evaluación de cobertura vegetal':
 		indice_ci = (band04.astype(float)-band03.astype(float) )/ (band04.astype(float)+band03.astype(float))
 		indice_savi = ((band08.astype(float)-band05.astype(float))/(band08.astype(float)+band05.astype(float)+0.5))*(1+0.5)
 		
-		def plot_indices(ingreso_indice, name):
-			fig,ax = plt.subplots()
-			ax.imshow(ingreso_indice, cmap="RdYlGn")
-			ax.set_title(name,fontweight ="bold")
-			return fig
+		#def plot_indices(ingreso_indice, name):
+		#	fig,ax = plt.subplots()
+		#	ax.imshow(ingreso_indice, cmap="RdYlGn")
+		#	ax.set_title(name,fontweight ="bold")
+		#	return fig
 			
 			
-		cola,colb,colc = st.columns(3)
+		#cola,colb,colc = st.columns(3)
 		
-		with cola:
-			fig_indice_ndvi=plot_indices(indice_ndwi, 'Índice NDVI')
-			st.pyplot(fig_indice_ndvi)
+		#with cola:
+		#	fig_indice_ndvi=plot_indices(indice_ndwi, 'Índice NDVI')
+		#	st.pyplot(fig_indice_ndvi)
 			
-			fig_indice_ndwi=plot_indices(indice_ndwi, 'Índice NDWI')
-			st.pyplot(fig_indice_ndwi)
+		#	fig_indice_ndwi=plot_indices(indice_ndwi, 'Índice NDWI')
+		#	st.pyplot(fig_indice_ndwi)
 			
-			fig_indice_tgi=plot_indices(indice_tgi, 'Índice TGI')
-			st.pyplot(fig_indice_tgi)
+		#	fig_indice_tgi=plot_indices(indice_tgi, 'Índice TGI')
+		#	st.pyplot(fig_indice_tgi)
 				
-		with colb:				
-			fig_indice_evi2=plot_indices(indice_evi2, 'Índice EVI2')
-			st.pyplot(fig_indice_evi2)
+		#with colb:				
+		#	fig_indice_evi2=plot_indices(indice_evi2, 'Índice EVI2')
+		#	st.pyplot(fig_indice_evi2)
 			
-			fig_indice_dbsi=plot_indices(indice_dbsi, 'Índice DBSI')
-			st.pyplot(fig_indice_dbsi)
+		#	fig_indice_dbsi=plot_indices(indice_dbsi, 'Índice DBSI')
+		#	st.pyplot(fig_indice_dbsi)
 			
-			fig_indice_ibi=plot_indices(indice_ibi, 'Índice IBI')
-			st.pyplot(fig_indice_ibi)
-		with colc:
+		#	fig_indice_ibi=plot_indices(indice_ibi, 'Índice IBI')
+		#	st.pyplot(fig_indice_ibi)
+		#with colc:
 			
-			fig_indice_gci=plot_indices(indice_gci, 'Índice GCI')
-			st.pyplot(fig_indice_gci)
+		#	fig_indice_gci=plot_indices(indice_gci, 'Índice GCI')
+		#	st.pyplot(fig_indice_gci)
 			
-			fig_indice_ci=plot_indices(indice_ci, 'Índice CI')
-			st.pyplot(fig_indice_ci)
+		#	fig_indice_ci=plot_indices(indice_ci, 'Índice CI')
+		#	st.pyplot(fig_indice_ci)
 			
-			fig_indice_savi=plot_indices(indice_savi, 'Índice SAVI')
-			st.pyplot(fig_indice_savi)
+		#	fig_indice_savi=plot_indices(indice_savi, 'Índice SAVI')
+		#	st.pyplot(fig_indice_savi)
 			
 			
 		principales_indices2 = st.selectbox('Seleccione el indice',['NDVI','NDWI','GCI','TGI','EVI2','DBSI','IBI','CI','SAVI'])
@@ -677,8 +672,12 @@ if option =='🧪 Evaluación de la calidad el agua':
 	with st.expander('Análisis anual de Índices'):
 		
 		try:
-			zona_opcion_agua = st.selectbox('🌐 Seleccione una zona',['Zona 1 red','Zona 2 yellow','Zona 3 cian','River','Anzu Norte', 'Berta 1', 'Confluencia', 'Cristobal','Genial', 'Vista Anzu'])
+			zona_opcion_agua = st.selectbox('🌐 Seleccione una zona',['Zona de monitoreo 1','Zona de monitoreo 2','Zona de monitoreo 3','Anzu Norte', 'Berta 1', 'Confluencia', 'Cristobal','Genial', 'Vista Anzu'])
 			year_option_agua = st.slider('Elija un año', 2017,2021,2017)
+
+			if zona_opcion_agua =='Zona de monitoreo 1':
+				zona_opcion_agua='River'
+
 			s2_bands = evaluacion_suelo.bandas(zona_opcion_agua, year_option_agua)
 
 			st.header('Ínidices de calidad de agua')
@@ -776,7 +775,7 @@ if option =='🧪 Evaluación de la calidad el agua':
 
 		columna1, columna2 = st.columns(2)
 		with columna1:
-			select_zona_agua = st.selectbox('🌐 Seleccione',['Zona 1 red','Zona 2 yellow','Zona 3 cian','Anzu Norte', 'Berta 1', 'Confluencia', 'Cristobal','Genial', 'Vista Anzu'])
+			select_zona_agua = st.selectbox('🌐 Seleccione',['Zona de monitoreo 1','Zona de monitoreo 2','Zona de monitoreo 3','Anzu Norte', 'Berta 1', 'Confluencia', 'Cristobal','Genial', 'Vista Anzu'])
 
 			year_zona = st.slider('Seleccione el año',2017,2021,2017,step=1)
 
