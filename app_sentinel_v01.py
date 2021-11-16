@@ -57,6 +57,11 @@ st.sidebar.video(video_bytes ,format="video/mp4", start_time=0)
 st.sidebar.title('Menu')
 option = st.sidebar.radio('Seleccione una opcion', ['💧 MAPE', '🛰 Visualización satelital', '⛰ Evaluación de cobertura vegetal', '🧪 Evaluación de la calidad el agua'])
 
+
+qr = Image.open('qrcode_app-sentinel-v1.herokuapp.com.png')
+st.sidebar.image(qr,caption='Quick Response', width=150)
+
+
 if option == '💧 MAPE':
 
 	st.info('MAPE - Amazonia ecuatoriana')
