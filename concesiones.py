@@ -10,7 +10,7 @@ def  imagen_concesiones():
 
 @st.cache
 def  seleccion_zona(zona, year):
-	if zona =='Zona 1 red':
+	if zona =='Zona de monitoreo 1':
 
 		img1=Image.open('Galeria_concesiones/Zona1/2017.png')
 		img2=Image.open('Galeria_concesiones/Zona1/2018.png')
@@ -29,7 +29,7 @@ def  seleccion_zona(zona, year):
 		if year==2021:
 			fig=img5
 
-	elif zona =='Zona 2 yellow':
+	elif zona =='Zona de monitoreo 2':
 
 		img1=Image.open('Galeria_concesiones/Zona2/2017.png')
 		img2=Image.open('Galeria_concesiones/Zona2/2018.png')
@@ -47,7 +47,7 @@ def  seleccion_zona(zona, year):
 			fig=img4
 		if year==2021:
 			fig=img5
-	elif zona =='Zona 3 cian':
+	elif zona =='Zona de monitoreo 3':
 
 		img1=Image.open('Galeria_concesiones/Zona3/2017.png')
 		img2=Image.open('Galeria_concesiones/Zona3/2018.png')
