@@ -3,7 +3,7 @@ import streamlit as st
 @st.cache
 def bandas(zona, year):
 
-	if zona== 'Zona 1 red':
+	if zona== 'Zona de monitoreo 1':
 
 		if year ==2017:
 			s2_bands = ["Evaluacion_suelo/Zona1/2017/B02.tiff",
@@ -58,7 +58,7 @@ def bandas(zona, year):
 
 
 
-	if zona== 'Zona 2 yellow':
+	if zona== 'Zona de monitoreo 2':
 
 		if year ==2017:
 			s2_bands = ["Evaluacion_suelo/Zona2/2017/B02.tiff",
@@ -112,7 +112,7 @@ def bandas(zona, year):
 				   "Evaluacion_suelo/Zona2/2021/B06.tiff"]
 
 
-	if zona== 'Zona 3 cian':
+	if zona== 'Zona de monitoreo 3':
 
 		if year ==2017:
 			s2_bands = ["Evaluacion_suelo/Zona3/2017/B02.tiff",
@@ -203,9 +203,3 @@ def bandas(zona, year):
 		            	"Evaluacion_suelo/River/bandas_2021/S2_B11_2021.tif",
 		            	"Evaluacion_suelo/River/bandas_2021/S2_B12_2021.tif"]			
 	return s2_bands
-
-
-
-
-
-
