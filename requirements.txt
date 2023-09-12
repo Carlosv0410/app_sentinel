@@ -9,4 +9,5 @@ plotly>=5.3.1
 sentinelhub>=3.3.2
 imageio>=2.10.1
 sklearn>=0.0
+scikit-learn
 opencv-python>=4.5.4.58
