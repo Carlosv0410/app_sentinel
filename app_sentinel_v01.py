@@ -36,8 +36,8 @@ from collections import Counter
 # Inicio de sesion SentinelHub
 
 st.set_option('deprecation.showPyplotGlobalUse', False)
-CLIENT_ID ='3fc9aefe-7d67-400b-935b-96c7d6406921'
-CLIENT_SECRET = 'Rga7fW/I].<xXH:Y<^zD8Nyypvwp&LxHO<B1*rR7'
+CLIENT_ID ='0d7e8598-eb42-4313-923c-3707afa2efd4'
+CLIENT_SECRET = 'hLc7Lg;&0%&mW:2?U&>j0N>jzIpCQAEK)2JkiAlZ'
 config = SHConfig()
 if CLIENT_ID and CLIENT_SECRET:
     config.sh_client_id= CLIENT_ID
