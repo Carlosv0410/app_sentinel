@@ -47,7 +47,7 @@ if config.sh_client_id == '' or  config.sh_client_secret == '':
 
 #Inicio de la Aplicación
 #-----------------------
-st.title('Sistema para monitoreo de bioindicadores ANZU')
+st.title('Sistema de monitoreo de bioindicadores Amazónico')
 
 video_file = open('monitoring1.mp4', 'rb')
 video_bytes = video_file.read()
